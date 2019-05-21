@@ -8,12 +8,17 @@ class CreateEventRequest extends BaseFormRequest
 {
     public function rules()
     {
-        return [];
+        return [
+            'place' => 'required|min:2',
+        ];
     }
 
     public function translationRules()
     {
-        return [];
+        return [
+            'title' => 'required|min:2',
+            'description' => 'required|min:2',
+        ];
     }
 
     public function authorize()
@@ -23,11 +28,25 @@ class CreateEventRequest extends BaseFormRequest
 
     public function messages()
     {
-        return [];
+        return [
+            'title.required' => trans('ibooking::common.messages.title is required'),
+            'title.min:2'=> trans('ibooking::common.messages.title min 2 '),
+            'description.required' => trans('ibooking::common.messages.description is required'),
+            'description.min:2'=> trans('ibooking::common.messages.description min 2 '),
+            'place.required' => trans('ibooking::common.messages.place is required'),
+            'place.min:2'=> trans('ibooking::common.messages.place min 2 '),
+        ];
     }
 
     public function translationMessages()
     {
-        return [];
+        return [
+            'title.required' => trans('ibooking::common.messages.title is required'),
+            'title.min:2'=> trans('ibooking::common.messages.title min 2 '),
+            'description.required' => trans('ibooking::common.messages.description is required'),
+            'description.min:2'=> trans('ibooking::common.messages.description min 2 '),
+            'place.required' => trans('ibooking::common.messages.place is required'),
+            'place.min:2'=> trans('ibooking::common.messages.place min 2 '),
+        ];
     }
 }

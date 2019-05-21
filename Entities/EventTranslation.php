@@ -25,15 +25,18 @@ class EventTranslation extends Model
         }
 
     }
+    
+    protected function setDescriptionAttribute($value){
 
-    protected function setSummaryAttribute($value){
-
-        if(!empty($value)){
-            $this->attributes['summary'] = $value;
-        } else {
-            $this->attributes['summary'] = substr(strip_tags($this->description),0,150);
+        if(!empty($this->summary) && !is_null($this->summary)){
+            $this->attributes['summary'] = $this->summary;
+        }else{
+            $this->attributes['summary'] = substr(strip_tags($value),0,150);
+            
         }
 
+        $this->attributes['description'] = $value;
     }
+
 
 }

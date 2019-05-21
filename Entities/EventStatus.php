@@ -17,10 +17,10 @@ class EventStatus
     public function __construct()
     {
         $this->statuses = [
-            self::DRAFT => trans('ibooking::common.eventStatus.draft'),
-            self::PENDING => trans('ibooking::common.eventStatus.pending'),
-            self::PUBLISHED => trans('ibooking::common.eventStatus.published'),
-            self::UNPUBLISHED => trans('ibooking::common.eventStatus.unpublished'),
+            self::DRAFT => trans('ibooking::events.status.draft'),
+            self::PENDING => trans('ibooking::events.status.pending'),
+            self::PUBLISHED => trans('ibooking::events.status.published'),
+            self::UNPUBLISHED => trans('ibooking::events.status.unpublished'),
         ];
     }
 

@@ -7,6 +7,13 @@ return [
 
     ],
     'table' => [
+        'title' => 'Titulo',
+        'description' => 'Descripcion',
+        'summary' => 'Sumario',
+        'price' => 'Precio',
+        'people' => 'Personas',
+        'image' => 'Imagen',
+        'gallery' => 'Galeria',
     ],
     'form' => [
     ],
@@ -20,11 +27,24 @@ return [
     ],
     'validation' => [
     ],
+    
     'status' => [
-        'draft' => 'Borrador',
-        'pending' => 'Pendiente de Revisión',
-        'published' => 'Publicado',
-        'unpublished' => 'En espera',
+        'disabled' => 'Inactivo',
+        'enabled' => 'Activo',
+    ],
+
+    'select' => 'Seleccione una opcion',
+
+    'translatable fields' => 'Campos traducibles',
+
+    'daysWeek' => [
+        'monday' => 'Lunes',
+        'tuesday' => 'Martes',
+        'wednesday' => 'Miercoles',
+        'thursday' => 'Jueves',
+        'friday' => 'Viernes',
+        'saturday' => 'Sabado',
+        'sunday' => 'Domingo'
     ],
 
     'status_text' => 'Estado',

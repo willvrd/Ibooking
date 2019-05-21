@@ -1,17 +1,19 @@
 <?php
 
 return [
-    'list resource' => 'List prices',
-    'create resource' => 'Create prices',
-    'edit resource' => 'Edit prices',
-    'destroy resource' => 'Destroy prices',
+    'single' => 'Precio',
+    'plural' => 'Precios',
+    'list resource' => 'Listar precios',
+    'create resource' => 'Crear precios',
+    'edit resource' => 'Editar precios',
+    'destroy resource' => 'Eliminar precios',
     'title' => [
-        'prices' => 'Price',
-        'create price' => 'Create a price',
-        'edit price' => 'Edit a price',
+        'prices' => 'Precio',
+        'create price' => 'Crear un precio',
+        'edit price' => 'Editar un precio',
     ],
     'button' => [
-        'create price' => 'Create a price',
+        'create price' => 'Crear un precio',
     ],
     'table' => [
     ],

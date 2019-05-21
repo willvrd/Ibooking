@@ -8,12 +8,16 @@ class CreatePlanRequest extends BaseFormRequest
 {
     public function rules()
     {
-        return [];
+        return [
+            'event_id' => 'required',
+        ];
     }
 
     public function translationRules()
     {
-        return [];
+        return [
+            'title' => 'required|min:2',
+        ];
     }
 
     public function authorize()
@@ -23,11 +27,18 @@ class CreatePlanRequest extends BaseFormRequest
 
     public function messages()
     {
-        return [];
+        return [
+            'title.required' => trans('ibooking::common.messages.title is required'),
+            'title.min:2'=> trans('ibooking::common.messages.title min 2 '),
+            'event_id.required' => trans('ibooking::events.messages.event is required'),
+        ];
     }
 
     public function translationMessages()
     {
-        return [];
+        return [
+            'title.required' => trans('ibooking::common.messages.title is required'),
+            'title.min:2'=> trans('ibooking::common.messages.title min 2 '),
+        ];
     }
 }

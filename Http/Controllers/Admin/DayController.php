@@ -9,6 +9,8 @@ use Modules\Ibooking\Http\Requests\CreateDayRequest;
 use Modules\Ibooking\Http\Requests\UpdateDayRequest;
 use Modules\Ibooking\Repositories\DayRepository;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
+use Modules\Ibooking\Entities\DaysWeek;
+use Modules\Ibooking\Entities\Status;
 
 class DayController extends AdminBaseController
 {
@@ -16,12 +18,19 @@ class DayController extends AdminBaseController
      * @var DayRepository
      */
     private $day;
+    private $daysWeek;
+    private $status;
 
-    public function __construct(DayRepository $day)
+    public function __construct(
+        DayRepository $day,
+        DaysWeek $daysWeek,
+        Status $status
+    )
     {
         parent::__construct();
-
         $this->day = $day;
+        $this->daysWeek = $daysWeek;
+        $this->status = $status;
     }
 
     /**
@@ -31,9 +40,8 @@ class DayController extends AdminBaseController
      */
     public function index()
     {
-        //$days = $this->day->all();
-
-        return view('ibooking::admin.days.index', compact(''));
+        $days = $this->day->all();
+        return view('ibooking::admin.days.index', compact('days'));
     }
 
     /**
@@ -43,7 +51,9 @@ class DayController extends AdminBaseController
      */
     public function create()
     {
-        return view('ibooking::admin.days.create');
+        $daysWeek = $this->daysWeek;
+        $status = $this->status;
+        return view('ibooking::admin.days.create',compact('daysWeek','status'));
     }
 
     /**
@@ -68,7 +78,9 @@ class DayController extends AdminBaseController
      */
     public function edit(Day $day)
     {
-        return view('ibooking::admin.days.edit', compact('day'));
+        $daysWeek = $this->daysWeek;
+        $status = $this->status;
+        return view('ibooking::admin.days.edit', compact('day','daysWeek','status'));
     }
 
     /**

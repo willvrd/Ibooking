@@ -38,13 +38,13 @@ class RegisterIbookingSidebar implements \Maatwebsite\Sidebar\SidebarExtender
     {
         $menu->group(trans('core::sidebar.content'), function (Group $group) {
             $group->item(trans('ibooking::common.ibooking'), function (Item $item) {
-                $item->icon('fa fa-copy');
+                $item->icon('fa fa-outdent');
                 $item->weight(10);
                 $item->authorize(
                      /* append */
                 );
-                $item->item(trans('ibooking::events.title.events'), function (Item $item) {
-                    $item->icon('fa fa-copy');
+                $item->item(trans('ibooking::events.plural'), function (Item $item) {
+                    $item->icon('fa fa-calendar-o');
                     $item->weight(0);
                     $item->append('admin.ibooking.event.create');
                     $item->route('admin.ibooking.event.index');
@@ -52,8 +52,8 @@ class RegisterIbookingSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                         $this->auth->hasAccess('ibooking.events.index')
                     );
                 });
-                $item->item(trans('ibooking::plans.title.plans'), function (Item $item) {
-                    $item->icon('fa fa-copy');
+                $item->item(trans('ibooking::plans.plural'), function (Item $item) {
+                    $item->icon('fa fa-calendar-check-o');
                     $item->weight(0);
                     $item->append('admin.ibooking.plan.create');
                     $item->route('admin.ibooking.plan.index');
@@ -61,7 +61,7 @@ class RegisterIbookingSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                         $this->auth->hasAccess('ibooking.plans.index')
                     );
                 });
-                $item->item(trans('ibooking::prices.title.prices'), function (Item $item) {
+                $item->item(trans('ibooking::prices.plural'), function (Item $item) {
                     $item->icon('fa fa-copy');
                     $item->weight(0);
                     $item->append('admin.ibooking.price.create');
@@ -70,8 +70,8 @@ class RegisterIbookingSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                         $this->auth->hasAccess('ibooking.prices.index')
                     );
                 });
-                $item->item(trans('ibooking::days.title.days'), function (Item $item) {
-                    $item->icon('fa fa-copy');
+                $item->item(trans('ibooking::days.plural'), function (Item $item) {
+                    $item->icon('fa fa-calendar');
                     $item->weight(0);
                     $item->append('admin.ibooking.day.create');
                     $item->route('admin.ibooking.day.index');

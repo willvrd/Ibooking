@@ -7,26 +7,47 @@ return [
 
     ],
     'table' => [
+        'title' => 'Title',
+        'description' => 'Description',
+        'summary' => 'Summary',
+        'price' => 'Price',
+        'people' => 'People',
+        'image' => 'Image',
+        'gallery' => 'Gallery',
     ],
     'form' => [
     ],
     'messages' => [
-        'title is required'=>'El título es requerido',
-        'title min 2'=>'El título debe contener mínimo dos caracteres',
-        'description is required'=>'La descripción es requerida',
-        'description min 2'=>'La descripción debe contener mínimo dos caracteres',
-        'place is required'=>'El lugar es requerido',
-        'place min 2'=>'El lugar debe contener mínimo dos caracteres',
+        'title is required'=>'The title is required',
+        'title min 2'=>'The title must contain at least two characters',
+        'description is required'=>'The description is required',
+        'description min 2'=>'The description must contain at least two characters',
+        'place is required'=>'The place is required',
+        'place min 2'=>'The place must contain at least two characters',
     ],
     'validation' => [
     ],
+
     'status' => [
-        'draft' => 'Borrador',
-        'pending' => 'Pendiente de Revisión',
-        'published' => 'Publicado',
-        'unpublished' => 'En espera',
+        'disabled' => 'Disabled',
+        'enabled' => 'Enabled',
     ],
 
+    'select' => 'Select an option',
+
+    'translatable fields' => 'Translatable fields',
+
+    'daysWeek' => [
+        'monday' => 'Monday',
+        'tuesday' => 'Tuesday',
+        'wednesday' => 'Wednesday',
+        'thursday' => 'Thursday',
+        'friday' => 'Friday',
+        'saturday' => 'Saturday',
+        'sunday' => 'Sunday'
+    ],
+
+    
     'status_text' => 'Estado',
 
     'transaction_status' => [

@@ -29,6 +29,10 @@
                         <table class="data-table table table-bordered table-hover">
                             <thead>
                             <tr>
+                                <th>ID</th>
+                                <th>{{ trans('ibooking::days.table.day') }}</th>
+                                <th>Status</th>
+                                <th>{{ trans('ibooking::days.table.date') }}</th>
                                 <th>{{ trans('core::core.table.created at') }}</th>
                                 <th data-sortable="false">{{ trans('core::core.table.actions') }}</th>
                             </tr>
@@ -37,6 +41,14 @@
                             <?php if (isset($days)): ?>
                             <?php foreach ($days as $day): ?>
                             <tr>
+                                <td>{{$day->id}}</td>
+                                <td>{{$day->present()->name}}</td>
+                                <td>
+                                <span class="label {{$day->present()->statusLabelClass}}">
+                                        {{$day->present()->status}}
+                                    </span>
+                                </td>
+                                <td>{{$day->date}}</td>
                                 <td>
                                     <a href="{{ route('admin.ibooking.day.edit', [$day->id]) }}">
                                         {{ $day->created_at }}
@@ -54,6 +66,10 @@
                             </tbody>
                             <tfoot>
                             <tr>
+                                <th>ID</th>
+                                <th>{{ trans('ibooking::days.table.day') }}</th>
+                                <th>Status</th>
+                                <th>{{ trans('ibooking::days.table.date') }}</th>
                                 <th>{{ trans('core::core.table.created at') }}</th>
                                 <th>{{ trans('core::core.table.actions') }}</th>
                             </tr>

@@ -1,19 +1,26 @@
 <?php
 
 return [
-    'list resource' => 'List events',
-    'create resource' => 'Create events',
-    'edit resource' => 'Edit events',
-    'destroy resource' => 'Destroy events',
+    'single' => 'Evento',
+    'plural' => 'Eventos',
+    'list resource' => 'Listar eventos',
+    'create resource' => 'Crear eventos',
+    'edit resource' => 'Editar eventos',
+    'destroy resource' => 'Eliminar eventos',
     'title' => [
-        'events' => 'Event',
-        'create event' => 'Create a event',
-        'edit event' => 'Edit a event',
+        'events' => 'Evento',
+        'create event' => 'Crear un evento',
+        'edit event' => 'Editar un evento',
     ],
     'button' => [
-        'create event' => 'Create a event',
+        'create event' => 'Crear un evento',
     ],
     'table' => [
+        'place' => 'Lugar',
+        'duration' => 'Duracion',
+        'people' => 'Personas',
+        'inforprice' => 'Precio',
+        'video' => 'Link video',
     ],
     'form' => [
     ],
@@ -21,4 +28,12 @@ return [
     ],
     'validation' => [
     ],
+
+    'status' => [
+        'draft' => 'Borrador',
+        'pending' => 'Pendiente',
+        'published' => 'Publicado',
+        'unpublished' => 'Sin Publicar',
+    ],
+
 ];

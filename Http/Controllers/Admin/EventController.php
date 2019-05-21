@@ -9,6 +9,7 @@ use Modules\Ibooking\Http\Requests\CreateEventRequest;
 use Modules\Ibooking\Http\Requests\UpdateEventRequest;
 use Modules\Ibooking\Repositories\EventRepository;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
+use Modules\Ibooking\Entities\EventStatus;
 
 class EventController extends AdminBaseController
 {
@@ -16,12 +17,16 @@ class EventController extends AdminBaseController
      * @var EventRepository
      */
     private $event;
+    private $eventStatus;
 
-    public function __construct(EventRepository $event)
+    public function __construct(
+        EventRepository $event,
+        EventStatus $eventStatus
+    )
     {
         parent::__construct();
-
         $this->event = $event;
+        $this->eventStatus = $eventStatus;
     }
 
     /**
@@ -31,9 +36,9 @@ class EventController extends AdminBaseController
      */
     public function index()
     {
-        //$events = $this->event->all();
-
-        return view('ibooking::admin.events.index', compact(''));
+        $events = $this->event->all();
+        $eventStatus = $this->eventStatus;
+        return view('ibooking::admin.events.index', compact('events','eventStatus'));
     }
 
     /**
@@ -42,8 +47,9 @@ class EventController extends AdminBaseController
      * @return Response
      */
     public function create()
-    {
-        return view('ibooking::admin.events.create');
+    {   
+        $eventStatus = $this->eventStatus;
+        return view('ibooking::admin.events.create',compact('eventStatus'));
     }
 
     /**
@@ -54,6 +60,7 @@ class EventController extends AdminBaseController
      */
     public function store(CreateEventRequest $request)
     {
+
         $this->event->create($request->all());
 
         return redirect()->route('admin.ibooking.event.index')
@@ -68,7 +75,8 @@ class EventController extends AdminBaseController
      */
     public function edit(Event $event)
     {
-        return view('ibooking::admin.events.edit', compact('event'));
+        $eventStatus = $this->eventStatus;
+        return view('ibooking::admin.events.edit', compact('event','eventStatus'));
     }
 
     /**

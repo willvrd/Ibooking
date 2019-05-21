@@ -29,6 +29,9 @@
                         <table class="data-table table table-bordered table-hover">
                             <thead>
                             <tr>
+                                <th>ID</th>
+                                <th>{{ trans('ibooking::common.table.title') }}</th>
+                                <th>{{ trans('ibooking::common.table.summary') }}</th>
                                 <th>{{ trans('core::core.table.created at') }}</th>
                                 <th data-sortable="false">{{ trans('core::core.table.actions') }}</th>
                             </tr>
@@ -37,6 +40,9 @@
                             <?php if (isset($events)): ?>
                             <?php foreach ($events as $event): ?>
                             <tr>
+                                <td>{{ $event->id }}</td>
+                                <td>{{ $event->title }}</td>
+                                <td>{{ $event->summary }}</td>
                                 <td>
                                     <a href="{{ route('admin.ibooking.event.edit', [$event->id]) }}">
                                         {{ $event->created_at }}
@@ -54,6 +60,9 @@
                             </tbody>
                             <tfoot>
                             <tr>
+                                <th>ID</th>
+                                <th>{{ trans('ibooking::common.table.title') }}</th>
+                                <th>{{ trans('ibooking::common.table.summary') }}</th>
                                 <th>{{ trans('core::core.table.created at') }}</th>
                                 <th>{{ trans('core::core.table.actions') }}</th>
                             </tr>

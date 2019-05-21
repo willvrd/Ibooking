@@ -9,6 +9,8 @@ use Modules\Ibooking\Http\Requests\CreatePlanRequest;
 use Modules\Ibooking\Http\Requests\UpdatePlanRequest;
 use Modules\Ibooking\Repositories\PlanRepository;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
+use Modules\Ibooking\Entities\Status;
+use Modules\Ibooking\Repositories\EventRepository;
 
 class PlanController extends AdminBaseController
 {
@@ -16,12 +18,18 @@ class PlanController extends AdminBaseController
      * @var PlanRepository
      */
     private $plan;
+    private $event;
 
-    public function __construct(PlanRepository $plan)
+    public function __construct(
+        PlanRepository $plan,
+        Status $status,
+        EventRepository $event
+    )
     {
         parent::__construct();
-
         $this->plan = $plan;
+        $this->status = $status;
+        $this->event = $event;
     }
 
     /**
@@ -31,9 +39,8 @@ class PlanController extends AdminBaseController
      */
     public function index()
     {
-        //$plans = $this->plan->all();
-
-        return view('ibooking::admin.plans.index', compact(''));
+        $plans = $this->plan->all();
+        return view('ibooking::admin.plans.index', compact('plans'));
     }
 
     /**
@@ -43,7 +50,9 @@ class PlanController extends AdminBaseController
      */
     public function create()
     {
-        return view('ibooking::admin.plans.create');
+        $status = $this->status;
+        $events = $this->event->all();
+        return view('ibooking::admin.plans.create',compact('status','events'));
     }
 
     /**
@@ -67,8 +76,10 @@ class PlanController extends AdminBaseController
      * @return Response
      */
     public function edit(Plan $plan)
-    {
-        return view('ibooking::admin.plans.edit', compact('plan'));
+    {   
+        $status = $this->status;
+        $events = $this->event->all();
+        return view('ibooking::admin.plans.edit', compact('plan','status','events'));
     }
 
     /**

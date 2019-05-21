@@ -46,10 +46,11 @@ class DaysWeek
      */
     public function get($dayId)
     {
-        if (isset($this->statuses[$dayId])) {
-            return $this->statuses[$dayId];
+        if (isset($this->days[$dayId])) {
+            return $this->days[$dayId];
         }
 
-        return $this->statuses[self::MONDAY];
+        return $this->days[self::MONDAY];
     }
+    
 }

@@ -8,7 +8,9 @@ class CreateDayRequest extends BaseFormRequest
 {
     public function rules()
     {
-        return [];
+        return [
+            'num' => 'required',
+        ];
     }
 
     public function translationRules()
@@ -23,7 +25,9 @@ class CreateDayRequest extends BaseFormRequest
 
     public function messages()
     {
-        return [];
+        return [
+            'num.required' => trans('ibooking::days.messages.num is required'),
+        ];
     }
 
     public function translationMessages()

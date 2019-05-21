@@ -1,19 +1,23 @@
 <?php
 
 return [
-    'list resource' => 'List days',
-    'create resource' => 'Create days',
-    'edit resource' => 'Edit days',
-    'destroy resource' => 'Destroy days',
+    'single' => 'Dia',
+    'plural' => 'Dias',
+    'list resource' => 'Listar dias',
+    'create resource' => 'Crear dias',
+    'edit resource' => 'Editar dias',
+    'destroy resource' => 'Eliminar dias',
     'title' => [
-        'days' => 'Day',
-        'create day' => 'Create a day',
-        'edit day' => 'Edit a day',
+        'days' => 'Dia',
+        'create day' => 'Crear un dia',
+        'edit day' => 'Editar un dia',
     ],
     'button' => [
-        'create day' => 'Create a day',
+        'create day' => 'Crear un dia',
     ],
     'table' => [
+        'day' => 'Dia',
+        'date' => 'Fecha',
     ],
     'form' => [
     ],

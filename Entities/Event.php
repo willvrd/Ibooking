@@ -4,10 +4,12 @@ namespace Modules\Ibooking\Entities;
 
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Media\Support\Traits\MediaRelation;
+use Modules\Media\Entities\File;
 
 class Event extends Model
 {
-    use Translatable;
+    use Translatable,MediaRelation;
 
     protected $table = 'ibooking__events';
 
@@ -49,6 +51,26 @@ class Event extends Model
 
     public function getOptionsAttribute($value) {
         return json_decode($value);
+    }
+
+    public function getMainimageAttribute()
+    {
+
+        $thumbnail = $this->files()->where('zone', 'mainimage')->first();
+
+        if ($thumbnail === null) {
+            $thumbnail=(object)['path'=>null,'main-type'=>'image/jpeg'];
+            return $thumbnail->path='modules/ibooking/img/event/default.jpg';
+        }
+
+        return $thumbnail;
+
+    }
+
+    public function getGalleryAttibute(){
+
+        return $this->filesByZone('gallery')->get();
+
     }
 
     
