@@ -32,6 +32,7 @@
                                 <th>ID</th>
                                 <th>{{ trans('ibooking::common.table.price') }}</th>
                                 <th>{{ trans('ibooking::common.table.people') }}</th>
+                                <th>{{ trans('ibooking::plans.single') }}</th>
                                 <th>{{ trans('core::core.table.created at') }}</th>
                                 <th data-sortable="false">{{ trans('core::core.table.actions') }}</th>
                             </tr>
@@ -40,6 +41,10 @@
                             <?php if (isset($prices)): ?>
                             <?php foreach ($prices as $price): ?>
                             <tr>
+                                <td>{{$price->id}}</td>
+                                <td>{{$price->price}}</td>
+                                <td>{{$price->people}}</td>
+                                <td>{{$price->plan->title}}</td>
                                 <td>
                                     <a href="{{ route('admin.ibooking.price.edit', [$price->id]) }}">
                                         {{ $price->created_at }}
@@ -60,6 +65,7 @@
                                 <th>ID</th>
                                 <th>{{ trans('ibooking::common.table.price') }}</th>
                                 <th>{{ trans('ibooking::common.table.people') }}</th>
+                                <th>{{ trans('ibooking::plans.single') }}</th>
                                 <th>{{ trans('core::core.table.created at') }}</th>
                                 <th>{{ trans('core::core.table.actions') }}</th>
                             </tr>

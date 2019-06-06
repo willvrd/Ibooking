@@ -8,6 +8,7 @@ use Modules\Ibooking\Entities\Day;
 use Modules\Ibooking\Http\Requests\CreateDayRequest;
 use Modules\Ibooking\Http\Requests\UpdateDayRequest;
 use Modules\Ibooking\Repositories\DayRepository;
+use Modules\Ibooking\Repositories\EventRepository;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
 use Modules\Ibooking\Entities\DaysWeek;
 use Modules\Ibooking\Entities\Status;
@@ -20,17 +21,20 @@ class DayController extends AdminBaseController
     private $day;
     private $daysWeek;
     private $status;
+    private $event;
 
     public function __construct(
         DayRepository $day,
         DaysWeek $daysWeek,
-        Status $status
+        Status $status,
+        EventRepository $event
     )
     {
         parent::__construct();
         $this->day = $day;
         $this->daysWeek = $daysWeek;
         $this->status = $status;
+        $this->event = $event;
     }
 
     /**
@@ -53,7 +57,8 @@ class DayController extends AdminBaseController
     {
         $daysWeek = $this->daysWeek;
         $status = $this->status;
-        return view('ibooking::admin.days.create',compact('daysWeek','status'));
+        $events = $this->event->all();
+        return view('ibooking::admin.days.create',compact('daysWeek','status','events'));
     }
 
     /**
@@ -80,7 +85,8 @@ class DayController extends AdminBaseController
     {
         $daysWeek = $this->daysWeek;
         $status = $this->status;
-        return view('ibooking::admin.days.edit', compact('day','daysWeek','status'));
+        $events = $this->event->all();
+        return view('ibooking::admin.days.edit', compact('day','daysWeek','status','events'));
     }
 
     /**
@@ -106,9 +112,19 @@ class DayController extends AdminBaseController
      */
     public function destroy(Day $day)
     {
-        $this->day->destroy($day);
+        try {
 
-        return redirect()->route('admin.ibooking.day.index')
-            ->withSuccess(trans('core::core.messages.resource deleted', ['name' => trans('ibooking::days.title.days')]));
+            $this->day->destroy($day);
+
+            return redirect()->route('admin.ibooking.day.index')
+                ->withSuccess(trans('core::core.messages.resource deleted', ['name' => trans('ibooking::days.title.days')]));
+
+        } catch (\Exception $e) {
+                \Log::error($e);
+                return redirect()->back()
+                    ->withError(trans('core::core.messages.resource error', ['name' => trans('ibooking::days.title.days')]));
+    
+        }
+
     }
 }

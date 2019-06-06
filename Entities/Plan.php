@@ -4,12 +4,16 @@ namespace Modules\Ibooking\Entities;
 
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use Laracasts\Presenter\PresentableTrait;
+use Modules\Ibooking\Presenters\PlanPresenter;
 
 class Plan extends Model
 {
-    use Translatable;
+    use Translatable,PresentableTrait;
 
     protected $table = 'ibooking__plans';
+
+    protected $presenter = PlanPresenter::class;
 
     public $translatedAttributes = [
         'title'

@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'single' => 'Reservation',
+    'plural' => 'Reservations',
     'list resource' => 'List reservations',
     'create resource' => 'Create reservations',
     'edit resource' => 'Edit reservations',
@@ -14,6 +16,11 @@ return [
         'create reservation' => 'Create a reservation',
     ],
     'table' => [
+        'firstname' => 'Name',
+        'lastname' => 'Lastname',
+        'email' => 'Email',
+        'phone' => 'Phone',
+        'start_date' => 'Date',
     ],
     'form' => [
     ],

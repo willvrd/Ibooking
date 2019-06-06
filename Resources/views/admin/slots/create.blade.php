@@ -15,23 +15,16 @@
     {!! Form::open(['route' => ['admin.ibooking.slot.store'], 'method' => 'post']) !!}
     <div class="row">
         <div class="col-md-12">
-            <div class="nav-tabs-custom">
-                @include('partials.form-tab-headers')
-                <div class="tab-content">
-                    <?php $i = 0; ?>
-                    @foreach (LaravelLocalization::getSupportedLocales() as $locale => $language)
-                        <?php $i++; ?>
-                        <div class="tab-pane {{ locale() == $locale ? 'active' : '' }}" id="tab_{{ $i }}">
-                            @include('ibooking::admin.slots.partials.create-fields', ['lang' => $locale])
-                        </div>
-                    @endforeach
+           
+                   
+                    @include('ibooking::admin.slots.partials.create-fields')
+                       
 
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary btn-flat">{{ trans('core::core.button.create') }}</button>
                         <a class="btn btn-danger pull-right btn-flat" href="{{ route('admin.ibooking.slot.index')}}"><i class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}</a>
                     </div>
-                </div>
-            </div> {{-- end nav-tabs-custom --}}
+                
         </div>
     </div>
     {!! Form::close() !!}

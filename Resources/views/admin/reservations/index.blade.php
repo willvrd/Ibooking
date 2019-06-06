@@ -11,6 +11,7 @@
 @stop
 
 @section('content')
+    
     <div class="row">
         <div class="col-xs-12">
             <div class="row">
@@ -29,6 +30,8 @@
                         <table class="data-table table table-bordered table-hover">
                             <thead>
                             <tr>
+                                <th>ID</th>
+                                <th>{{ trans('ibooking::common.table.description') }}</th>
                                 <th>{{ trans('core::core.table.created at') }}</th>
                                 <th data-sortable="false">{{ trans('core::core.table.actions') }}</th>
                             </tr>
@@ -37,6 +40,8 @@
                             <?php if (isset($reservations)): ?>
                             <?php foreach ($reservations as $reservation): ?>
                             <tr>
+                                <td>{{$reservation->id}}</td>
+                                <td>{{$reservation->description}}</td>
                                 <td>
                                     <a href="{{ route('admin.ibooking.reservation.edit', [$reservation->id]) }}">
                                         {{ $reservation->created_at }}
@@ -54,6 +59,8 @@
                             </tbody>
                             <tfoot>
                             <tr>
+                                <th>ID</th>
+                                <th>{{ trans('ibooking::common.table.description') }}</th>
                                 <th>{{ trans('core::core.table.created at') }}</th>
                                 <th>{{ trans('core::core.table.actions') }}</th>
                             </tr>

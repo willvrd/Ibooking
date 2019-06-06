@@ -20,6 +20,8 @@ return [
     'form' => [
     ],
     'messages' => [
+        'plan is required'=>'The plan is required',
+        'price is required'=>'The price is required',
     ],
     'validation' => [
     ],

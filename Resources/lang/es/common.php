@@ -24,6 +24,7 @@ return [
         'description min 2'=>'La descripción debe contener mínimo dos caracteres',
         'place is required'=>'El lugar es requerido',
         'place min 2'=>'El lugar debe contener mínimo dos caracteres',
+        'error delete' => 'Ha ocurrido un Error',
     ],
     'validation' => [
     ],
@@ -76,6 +77,14 @@ return [
     'admin_notes' => 'Notas de Administración',
     'created_at' => 'Fecha de Creación',
     'parent' => 'Superior',
+
+    'reservationStatus' => [
+        'declined' => 'Declinado',
+        'approved' => 'Aprobado',
+        'pending' => 'Pendiente',
+        'expired' => 'Expirado',
+        'error' => 'Error'
+    ],
 
     'uri' => 'insidius',
 

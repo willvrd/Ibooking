@@ -8,7 +8,10 @@ class UpdatePriceRequest extends BaseFormRequest
 {
     public function rules()
     {
-        return [];
+        return [
+            'plan_id' => 'required',
+            'price' => 'required',
+        ];
     }
 
     public function translationRules()
@@ -23,11 +26,17 @@ class UpdatePriceRequest extends BaseFormRequest
 
     public function messages()
     {
-        return [];
+        return [
+            'plan_id.required' => trans('ibooking::prices.messages.plan is required'),
+            'price.required' => trans('ibooking::prices.messages.price is required'),
+        ];
     }
 
     public function translationMessages()
     {
-        return [];
+        return [
+            'plan_id.required' => trans('ibooking::prices.messages.plan is required'),
+            'price.required' => trans('ibooking::prices.messages.price is required'),
+        ];
     }
 }

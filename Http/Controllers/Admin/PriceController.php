@@ -31,9 +31,8 @@ class PriceController extends AdminBaseController
      */
     public function index()
     {
-        //$prices = $this->price->all();
-
-        return view('ibooking::admin.prices.index', compact(''));
+        $prices = $this->price->all();
+        return view('ibooking::admin.prices.index', compact('prices'));
     }
 
     /**

@@ -105,9 +105,17 @@ class PlanController extends AdminBaseController
      */
     public function destroy(Plan $plan)
     {
-        $this->plan->destroy($plan);
+        try {
+            $this->plan->destroy($plan);
 
-        return redirect()->route('admin.ibooking.plan.index')
-            ->withSuccess(trans('core::core.messages.resource deleted', ['name' => trans('ibooking::plans.title.plans')]));
+            return redirect()->route('admin.ibooking.plan.index')
+                ->withSuccess(trans('core::core.messages.resource deleted', ['name' => trans('ibooking::plans.title.plans')]));
+        
+        } catch (\Exception $e) {
+                \Log::error($e);
+                return redirect()->back()
+                    ->withError(trans('core::core.messages.resource error', ['name' => trans('ibooking::plans.title.plans')]));
+    
+        }
     }
 }

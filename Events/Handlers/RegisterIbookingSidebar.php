@@ -61,6 +61,7 @@ class RegisterIbookingSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                         $this->auth->hasAccess('ibooking.plans.index')
                     );
                 });
+                /*
                 $item->item(trans('ibooking::prices.plural'), function (Item $item) {
                     $item->icon('fa fa-copy');
                     $item->weight(0);
@@ -70,6 +71,8 @@ class RegisterIbookingSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                         $this->auth->hasAccess('ibooking.prices.index')
                     );
                 });
+                */
+                
                 $item->item(trans('ibooking::days.plural'), function (Item $item) {
                     $item->icon('fa fa-calendar');
                     $item->weight(0);
@@ -79,6 +82,8 @@ class RegisterIbookingSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                         $this->auth->hasAccess('ibooking.days.index')
                     );
                 });
+               
+                /*
                 $item->item(trans('ibooking::slots.title.slots'), function (Item $item) {
                     $item->icon('fa fa-copy');
                     $item->weight(0);
@@ -88,7 +93,9 @@ class RegisterIbookingSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                         $this->auth->hasAccess('ibooking.slots.index')
                     );
                 });
-                $item->item(trans('ibooking::reservations.title.reservations'), function (Item $item) {
+                */
+               
+                $item->item(trans('ibooking::reservations.plural'), function (Item $item) {
                     $item->icon('fa fa-copy');
                     $item->weight(0);
                     $item->append('admin.ibooking.reservation.create');
@@ -97,6 +104,7 @@ class RegisterIbookingSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                         $this->auth->hasAccess('ibooking.reservations.index')
                     );
                 });
+               
 // append
 
 

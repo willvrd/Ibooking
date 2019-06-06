@@ -10,18 +10,38 @@ use Modules\Ibooking\Http\Requests\UpdateReservationRequest;
 use Modules\Ibooking\Repositories\ReservationRepository;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
 
+use Modules\Ibooking\Repositories\SlotRepository;
+use Modules\Ibooking\Repositories\PlanRepository;
+
+use Modules\Ibooking\Entities\DaysWeek;
+use Modules\Ibooking\Entities\ReservationStatus;
+
 class ReservationController extends AdminBaseController
 {
     /**
      * @var ReservationRepository
      */
     private $reservation;
+    private $daysWeek;
+    private $slot;
+    private $reservationStatus;
+    private $plan;
 
-    public function __construct(ReservationRepository $reservation)
+    public function __construct(
+        ReservationRepository $reservation,
+        DaysWeek $daysWeek,
+        SlotRepository $slot,
+        ReservationStatus $reservationStatus,
+        PlanRepository $plan
+    )
     {
         parent::__construct();
 
         $this->reservation = $reservation;
+        $this->daysWeek = $daysWeek;
+        $this->slot= $slot;
+        $this->reservationStatus = $reservationStatus;
+        $this->plan = $plan;
     }
 
     /**
@@ -31,9 +51,8 @@ class ReservationController extends AdminBaseController
      */
     public function index()
     {
-        //$reservations = $this->reservation->all();
-
-        return view('ibooking::admin.reservations.index', compact(''));
+        $reservations = $this->reservation->all();
+        return view('ibooking::admin.reservations.index', compact('reservations'));
     }
 
     /**
@@ -43,7 +62,11 @@ class ReservationController extends AdminBaseController
      */
     public function create()
     {
-        return view('ibooking::admin.reservations.create');
+        $daysWeek = $this->daysWeek;
+        $slots = $this->slot->all();
+        $status = $this->reservationStatus;
+        $plans = $this->plan->all();
+        return view('ibooking::admin.reservations.create',compact('daysWeek','slots','status','plans'));
     }
 
     /**

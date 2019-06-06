@@ -4,7 +4,7 @@
             <option value="">{{trans('ibooking::common.select')}}</option>
             @if(count($daysWeek)>0)
                 @foreach ($daysWeek->lists() as $index => $d)
-                    <option value="{{$index}}" @if($index==$day->id) selected @endif >{{$d}}</option>
+                    <option value="{{$index}}" @if($index==$day->num) selected @endif >{{$d}}</option>
                 @endforeach
             @endif
         </select>

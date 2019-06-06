@@ -4,14 +4,18 @@ namespace Modules\Ibooking\Entities;
 
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use Laracasts\Presenter\PresentableTrait;
+use Modules\Ibooking\Presenters\EventPresenter;
 use Modules\Media\Support\Traits\MediaRelation;
 use Modules\Media\Entities\File;
 
 class Event extends Model
 {
-    use Translatable,MediaRelation;
+    use Translatable,PresentableTrait,MediaRelation;
 
     protected $table = 'ibooking__events';
+
+    protected $presenter = EventPresenter::class;
 
     public $translatedAttributes = [
         'title',

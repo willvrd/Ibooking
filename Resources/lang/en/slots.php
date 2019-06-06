@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'single' => 'Hour',
+    'plural' => 'Hours',
     'list resource' => 'List slots',
     'create resource' => 'Create slots',
     'edit resource' => 'Edit slots',
@@ -18,6 +20,7 @@ return [
     'form' => [
     ],
     'messages' => [
+        'hour is required'=>'The hour is required',
     ],
     'validation' => [
     ],

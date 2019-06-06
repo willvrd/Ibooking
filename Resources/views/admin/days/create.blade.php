@@ -21,6 +21,13 @@
                     @include('ibooking::admin.days.partials.create-fields')
                 </div>
             </div>
+
+            <div class="box box-primary">
+                <div class="box-body">
+                    @include('ibooking::admin.days.partials.create-slots')
+                </div>
+            </div>
+
         </div>
 
         <div class="col-xs-12 col-sm-4">

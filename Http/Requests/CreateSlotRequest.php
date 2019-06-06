@@ -8,7 +8,9 @@ class CreateSlotRequest extends BaseFormRequest
 {
     public function rules()
     {
-        return [];
+        return [
+            'hour' => 'required',
+        ];
     }
 
     public function translationRules()
@@ -23,7 +25,9 @@ class CreateSlotRequest extends BaseFormRequest
 
     public function messages()
     {
-        return [];
+        return [
+            'hour.required' => trans('ibooking::hour.messages.hour is required'),
+        ];
     }
 
     public function translationMessages()

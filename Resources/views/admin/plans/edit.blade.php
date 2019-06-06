@@ -17,6 +17,7 @@
 
 
         <div class="col-xs-12 col-sm-8">
+
             <div class="box box-primary">
 
                 <div class="box-header">
@@ -40,6 +41,9 @@
                 </div>
 
             </div>
+
+            @include('ibooking::admin.plans.partials.edit-fields')
+
         </div>
 
         <div class="col-xs-12 col-sm-4">
