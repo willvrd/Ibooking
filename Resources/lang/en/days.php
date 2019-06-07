@@ -26,4 +26,14 @@ return [
     ],
     'validation' => [
     ],
+
+    'slots' => [
+        'assign hours' => 'Assign hours',
+        'add new hour' => 'Add new hour',
+        'select' => 'Select',
+        'add' => 'Add',
+        'search hours example' => 'Search hours - Example: 14:00:00',
+        'manage hours' => 'Manage hours',
+        'available hours' => 'Available hours',
+    ],
 ];

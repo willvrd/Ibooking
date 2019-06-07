@@ -17,11 +17,19 @@
 
 
         <div class="col-xs-12 col-sm-8">
+
             <div class="box box-primary">
                 <div class="box-body">
                     @include('ibooking::admin.days.partials.edit-fields')
                 </div>
             </div>
+
+            <div class="box box-primary">
+                <div class="box-body">
+                    @include('ibooking::admin.days.partials.slots')
+                </div>
+            </div>
+
         </div>
 
         <div class="col-xs-12 col-sm-4">

@@ -4,7 +4,7 @@ return [
     'ibooking' => 'Ibooking',
 
     'button' => [
-
+        'close' => 'Cerrar',
     ],
     'table' => [
         'title' => 'Title',

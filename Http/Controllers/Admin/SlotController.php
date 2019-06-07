@@ -10,6 +10,9 @@ use Modules\Ibooking\Http\Requests\UpdateSlotRequest;
 use Modules\Ibooking\Repositories\SlotRepository;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
 
+use Illuminate\Support\Facades\Input;
+use Yajra\Datatables\Datatables;
+
 class SlotController extends AdminBaseController
 {
     /**
@@ -99,4 +102,42 @@ class SlotController extends AdminBaseController
         return redirect()->route('admin.ibooking.slot.index')
             ->withSuccess(trans('core::core.messages.resource deleted', ['name' => trans('ibooking::slots.title.slots')]));
     }
+
+    /**
+     * DataTable Component
+     *
+     * @param  Slot $slot
+     * @return Response
+     */
+
+    public function searchTable(Request $request)
+    {
+        $query = Slot::select('id', 'hour');
+        return datatables($query)->make(true);
+    }
+
+    /**
+     * Search Component
+     *
+     * @param  Slot $slot
+     * @return Response
+     */
+
+    public function searchSlots()
+    {
+
+        $data = array();
+        $q = strtolower(Input::get('q'));
+       
+        $slots = Slot::select('id','hour')
+        ->where("hour","like","%{$q}%")
+        ->get();
+
+        $data["data"] = $slots;
+
+        return response()->json($data);
+
+    }
+
+
 }

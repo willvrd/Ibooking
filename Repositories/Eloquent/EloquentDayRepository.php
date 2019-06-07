@@ -82,8 +82,6 @@ class EloquentDayRepository extends EloquentBaseRepository implements DayReposit
 
     public function create($data){
 
-        dd($data);
-        
         if(isset($data["date"]) && !empty($data["date"])){
             $dayNumber = date('N',strtotime($data["date"]));
             $data["num"] = $dayNumber;
@@ -93,7 +91,12 @@ class EloquentDayRepository extends EloquentBaseRepository implements DayReposit
 
         // sync tables
         if($day){
+
           $day->events()->sync(array_get($data, 'events', []));
+
+          if(isset($data["slots"]))
+            $day->slots()->sync(array_get($data, 'slots', []));
+
         }
 
         return $day;
@@ -112,7 +115,11 @@ class EloquentDayRepository extends EloquentBaseRepository implements DayReposit
 
         // sync tables
         if($day){
+
           $day->events()->sync(array_get($data, 'events', []));
+
+          $day->slots()->sync(array_get($data, 'slots', []));
+
         }
 
         return $day;
@@ -123,9 +130,12 @@ class EloquentDayRepository extends EloquentBaseRepository implements DayReposit
     {
         
          // desync tables
-        if(count($day->events())>0){
+        if(count($day->events())>0)
             $day->events()->detach();
-        }
+
+        if(count($day->slots())>0)
+            $day->slots()->detach();
+        
 
         return $day->delete();
     }
@@ -152,14 +162,10 @@ class EloquentDayRepository extends EloquentBaseRepository implements DayReposit
     
           $model->update($data);
 
-            // sync tables
-          if(isset($data['events'])){
-            $model->events()->sync(array_get($data, 'events', []));
-          }
+          // sync tables
+          $model->events()->sync(array_get($data, 'events', []));
+          $model->slots()->sync(array_get($data, 'slots', []));
           
-          // Event 
-          //event(new PlanWasUpdated($model, $data));
-        
         }
     
         return $model;
@@ -185,7 +191,12 @@ class EloquentDayRepository extends EloquentBaseRepository implements DayReposit
   
       if($model) {
 
-        //event(new PlanWasDeleted($model));
+         // desync tables
+        if(count($model->events())>0)
+          $model->events()->detach();
+
+        if(count($model->slots())>0)
+          $model->slots()->detach();
 
         $model->delete();
 

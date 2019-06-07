@@ -24,7 +24,7 @@
 
             <div class="box box-primary">
                 <div class="box-body">
-                    @include('ibooking::admin.days.partials.create-slots')
+                   @include('ibooking::admin.days.partials.slots')
                 </div>
             </div>
 

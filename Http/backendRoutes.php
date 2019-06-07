@@ -136,6 +136,8 @@ $router->group(['prefix' =>'/ibooking'], function (Router $router) {
         'uses' => 'DayController@destroy',
         'middleware' => 'can:ibooking.days.destroy'
     ]);
+
+  
     $router->bind('slot', function ($id) {
         return app('Modules\Ibooking\Repositories\SlotRepository')->find($id);
     });
@@ -169,6 +171,18 @@ $router->group(['prefix' =>'/ibooking'], function (Router $router) {
         'uses' => 'SlotController@destroy',
         'middleware' => 'can:ibooking.slots.destroy'
     ]);
+
+    $router->get('slots/searchSlots', [
+        'as'    => 'admin.ibooking.slot.searchSlots',
+        'uses'  => 'SlotController@searchTable'
+    ]);
+
+    $router->get('slots/searchSlotsComponent', [
+        'as'    => 'admin.ibooking.slot.searchSlotsComponent',
+        'uses'  => 'SlotController@searchSlots'
+    ]);
+
+
     $router->bind('reservation', function ($id) {
         return app('Modules\Ibooking\Repositories\ReservationRepository')->find($id);
     });

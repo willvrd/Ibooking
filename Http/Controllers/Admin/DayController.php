@@ -9,6 +9,7 @@ use Modules\Ibooking\Http\Requests\CreateDayRequest;
 use Modules\Ibooking\Http\Requests\UpdateDayRequest;
 use Modules\Ibooking\Repositories\DayRepository;
 use Modules\Ibooking\Repositories\EventRepository;
+use Modules\Ibooking\Repositories\SlotRepository;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
 use Modules\Ibooking\Entities\DaysWeek;
 use Modules\Ibooking\Entities\Status;
@@ -22,12 +23,14 @@ class DayController extends AdminBaseController
     private $daysWeek;
     private $status;
     private $event;
+    private $slot;
 
     public function __construct(
         DayRepository $day,
         DaysWeek $daysWeek,
         Status $status,
-        EventRepository $event
+        EventRepository $event,
+        SlotRepository $slot
     )
     {
         parent::__construct();
@@ -35,6 +38,7 @@ class DayController extends AdminBaseController
         $this->daysWeek = $daysWeek;
         $this->status = $status;
         $this->event = $event;
+        $this->slot = $slot;
     }
 
     /**
@@ -69,6 +73,7 @@ class DayController extends AdminBaseController
      */
     public function store(CreateDayRequest $request)
     {
+
         $this->day->create($request->all());
 
         return redirect()->route('admin.ibooking.day.index')
@@ -86,7 +91,8 @@ class DayController extends AdminBaseController
         $daysWeek = $this->daysWeek;
         $status = $this->status;
         $events = $this->event->all();
-        return view('ibooking::admin.days.edit', compact('day','daysWeek','status','events'));
+        $slots = $this->slot->all();
+        return view('ibooking::admin.days.edit', compact('day','daysWeek','status','events','slots'));
     }
 
     /**

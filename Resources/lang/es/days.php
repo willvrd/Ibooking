@@ -25,4 +25,15 @@ return [
     ],
     'validation' => [
     ],
+
+    'slots' => [
+        'assign hours' => 'Asignar horas',
+        'add new hour' => 'Agregar nueva hora',
+        'select' => 'Seleccionar',
+        'add' => 'Agregar',
+        'search hours example' => 'Buscar horas - Ejemplo: 14:00:00',
+        'manage hours' => 'Gestionar horas',
+        'available hours' => 'Horas',
+    ],
+
 ];
