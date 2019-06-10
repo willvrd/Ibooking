@@ -1,11 +1,11 @@
 <div class="form-group ">
-    <label for="firstname">{{trans("ibooking::reservations.table.firstname")}}</label>
-    <input name="firstname"  type="text" class="form-control" required="required" >
+    <label for="first_name">{{trans("ibooking::reservations.table.firstname")}}</label>
+    <input name="first_name"  type="text" class="form-control" required="required" >
 </div>
 
 <div class="form-group ">
-    <label for="lastname">{{trans("ibooking::reservations.table.lastname")}}</label>
-    <input name="lastname"  type="text" class="form-control" required="required" >
+    <label for="last_name">{{trans("ibooking::reservations.table.lastname")}}</label>
+    <input name="last_name"  type="text" class="form-control" required="required" >
 </div>
 
 <div class="form-group ">
@@ -15,7 +15,7 @@
 
 <div class="form-group ">
     <label for="phone">{{trans("ibooking::reservations.table.phone")}}</label>
-    <input name="phone"  type="text" class="form-control" required="required">
+    <input name="fields[phone]"  type="text" class="form-control">
 </div>
 
 <div class="form-group ">
@@ -28,6 +28,7 @@
     <input name="start_date"  type="date" class="form-control" required="required" >
 </div>
 
+{{--
 <div class="form-group">
     <label for="days">{{trans('ibooking::days.single')}}</label>
     <select class="form-control" id="day_id" name="day_id" required>
@@ -39,6 +40,7 @@
         @endif
     </select>
 </div>
+--}}
 
 <div class="form-group">
     <label for="slot">{{trans('ibooking::slots.single')}}</label>
@@ -51,3 +53,12 @@
         @endif
     </select>
 </div>
+
+<br>
+<div class="form-group" style="margin-left:20px;">
+    <div class="checkbox">
+        <label><input name="notify" type="checkbox">{{trans('ibooking::common.form.notify')}}</label>
+    </div>
+</div>
+
+

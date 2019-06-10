@@ -16,6 +16,7 @@ return [
         'gallery' => 'Gallery',
     ],
     'form' => [
+        'notify' => 'Notify by email',
     ],
     'messages' => [
         'title is required'=>'The title is required',
@@ -25,6 +26,9 @@ return [
         'place is required'=>'The place is required',
         'place min 2'=>'The place must contain at least two characters',
         'error delete' => 'Error deleting',
+        'start_date is required'=>'The date is required',
+        'slot_id is required'=>'The slot id is required',
+        'day_id is required'=>'The day id is required',
     ],
     'validation' => [
     ],
@@ -46,6 +50,15 @@ return [
         'friday' => 'Friday',
         'saturday' => 'Saturday',
         'sunday' => 'Sunday'
+    ],
+
+    'email' => [
+        'subject' => 'Reservation Status:',
+        'intro' => 'Reservation System Report',
+        'msg' =>[
+          'reservation' => 'Reservation',
+          'success' => 'processed',
+        ],
     ],
 
     

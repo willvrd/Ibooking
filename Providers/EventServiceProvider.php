@@ -16,6 +16,11 @@ use Modules\Ibooking\Events\Handlers\PlanSavePrices;
 use Modules\Ibooking\Events\Handlers\PlanUpdatePrices;
 use Modules\Ibooking\Events\Handlers\PlanDeletePrices;
 
+use Modules\Ibooking\Events\ReservationIsCreating;
+use Modules\Ibooking\Events\ReservationWasCreated;
+use Modules\Ibooking\Events\Handlers\UserCreate;
+use Modules\Ibooking\Events\Handlers\ReservationSend;
+
 class EventServiceProvider extends ServiceProvider
 {
     protected $listen = [
@@ -37,5 +42,12 @@ class EventServiceProvider extends ServiceProvider
         PlanWasDeleted::class => [
             PlanDeletePrices::class,
         ],
+        ReservationIsCreating::class => [
+            UserCreate::class,
+        ],
+        ReservationWasCreated::class => [
+            ReservationSend::class,
+        ],
+
     ];
 }

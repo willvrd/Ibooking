@@ -23,10 +23,10 @@ class CreateIbookingReservationsTable extends Migration
             $table->double('value', 30, 2)->default(0);
             $table->tinyInteger('status')->default(0)->unsigned();
 
-            $table->integer('slot_id')->unsigned();
+            $table->integer('slot_id')->unsigned()->nullable();
             $table->foreign('slot_id')->references('id')->on('ibooking__slots')->onDelete('restrict');
 
-            $table->integer('day_id')->unsigned();
+            $table->integer('day_id')->unsigned()->nullable();
             $table->foreign('day_id')->references('id')->on('ibooking__days')->onDelete('restrict');
 
             $table->timestamp('start_date')->nullable();

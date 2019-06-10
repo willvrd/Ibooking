@@ -18,7 +18,7 @@
         <div class="col-xs-12 col-sm-8">
             <div class="box box-primary">
                 <div class="box-body">
-                    {{-- @include('ibooking::admin.reservations.partials.create-fields')--}}
+                    @include('ibooking::admin.reservations.partials.create-fields')
                 </div>
             </div>        
         </div>
@@ -26,9 +26,16 @@
         <div class="col-xs-12 col-sm-4">
             <div class="box box-primary">
                 <div class="box-body">
-                    {{-- @include('ibooking::admin.reservations.partials.create-fields-right') --}}
+                    @include('ibooking::admin.reservations.partials.create-fields-right')
                 </div>
             </div>
+
+            <div class="box box-primary">
+                <div class="box-body">
+                    @include('ibooking::admin.reservations.partials.coupon')
+                </div>
+            </div>
+
         </div>
 
         <div class="col-xs-12">

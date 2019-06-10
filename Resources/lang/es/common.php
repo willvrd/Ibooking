@@ -16,6 +16,7 @@ return [
         'gallery' => 'Galeria',
     ],
     'form' => [
+        'notify' => 'Notificar por email',
     ],
     'messages' => [
         'title is required'=>'El título es requerido',
@@ -25,6 +26,9 @@ return [
         'place is required'=>'El lugar es requerido',
         'place min 2'=>'El lugar debe contener mínimo dos caracteres',
         'error delete' => 'Ha ocurrido un Error',
+        'start_date is required'=>'La fecha es requerida',
+        'slot_id is required'=>'El slot id es requerido',
+        'day_id is required'=>'El dia id es requerido',
     ],
     'validation' => [
     ],
@@ -46,6 +50,15 @@ return [
         'friday' => 'Viernes',
         'saturday' => 'Sabado',
         'sunday' => 'Domingo'
+    ],
+
+    'email' => [
+        'subject' => 'Estado de la Reservacion:',
+        'intro' => 'Reporte del Sistema de Reservacion',
+        'msg' =>[
+          'reservation' => 'Reservacion',
+          'success' => 'procesada',
+        ],
     ],
 
     'status_text' => 'Estado',

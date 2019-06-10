@@ -31,6 +31,7 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Email</th>
                                 <th>{{ trans('ibooking::common.table.description') }}</th>
                                 <th>{{ trans('core::core.table.created at') }}</th>
                                 <th data-sortable="false">{{ trans('core::core.table.actions') }}</th>
@@ -41,6 +42,7 @@
                             <?php foreach ($reservations as $reservation): ?>
                             <tr>
                                 <td>{{$reservation->id}}</td>
+                                <td>{{$reservation->customer->email}}</td>
                                 <td>{{$reservation->description}}</td>
                                 <td>
                                     <a href="{{ route('admin.ibooking.reservation.edit', [$reservation->id]) }}">
@@ -60,6 +62,7 @@
                             <tfoot>
                             <tr>
                                 <th>ID</th>
+                                <th>Email</th>
                                 <th>{{ trans('ibooking::common.table.description') }}</th>
                                 <th>{{ trans('core::core.table.created at') }}</th>
                                 <th>{{ trans('core::core.table.actions') }}</th>

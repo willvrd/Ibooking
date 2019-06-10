@@ -3,11 +3,18 @@
 namespace Modules\Ibooking\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Laracasts\Presenter\PresentableTrait;
+use Modules\Ibooking\Presenters\ReservationPresenter;
 
 class Reservation extends Model
 {
    
+    use PresentableTrait;
+
     protected $table = 'ibooking__reservations';
+
+    protected $presenter = ReservationPresenter::class;
+
     protected $fillable = [
         'customer_id',
         'description',

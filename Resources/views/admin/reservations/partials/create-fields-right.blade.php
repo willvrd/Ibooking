@@ -10,7 +10,7 @@
 <div class="form-group">
     <label for="plans">{{trans('ibooking::plans.single')}}</label>
     @if(count($plans)>0)
-        <select class="form-control" id="plan_id" name="plan_id">
+        <select class="form-control" id="plan_id" name="plan_id" required>
             <option value="">{{trans('ibooking::common.select')}}</option>
             @foreach ($plans as $plan)
                 <option value="{{$plan->id}}" data-id="{{$plan->id}}">{{$plan->title}}</option>
@@ -21,7 +21,7 @@
 
 <div class="form-group">
     <label for="prices">{{trans('ibooking::common.table.people')}}</label>
-    <select class="form-control" id="prices" name="prices">
+    <select class="form-control" id="prices" name="people" required>
         <option value="">{{trans('ibooking::common.select')}}</option>
         
     </select> 
@@ -29,7 +29,7 @@
 
 <div class="form-group ">
     <label for="value">{{trans("ibooking::common.table.price")}}</label>
-    <input name="value"  type="text" class="form-control" required="required" >
+    <input id="value" name="value"  type="text" class="form-control" required="required" >
 </div>
 
 @push('js-stack')
@@ -62,8 +62,9 @@ $(function(){
                         htmlOp = "";
                         for (datas in result.data) {
                             people = result.data[datas].people;
+                            price = result.data[datas].price;
 
-                            htmlOp+="<option value='"+people+"'>"+people+"</option>";
+                            htmlOp+="<option value='"+people+"' data-price='"+price+"'>"+people+"</option>";
                             //console.log(result.data[datas].price);
                         }
                         $(idDiv).append(htmlOp);
@@ -86,6 +87,12 @@ $(function(){
         }
 
     });
+    /*
+    $("#prices").change(function(){
+        console.log($(this).data('price'));
+        //$("#value").val($(this).data('value'));
+    });
+    */
 
 });//end Jquery
 

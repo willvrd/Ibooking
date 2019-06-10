@@ -26,6 +26,7 @@ class ReservationController extends AdminBaseController
     private $slot;
     private $reservationStatus;
     private $plan;
+    private $coupon;
 
     public function __construct(
         ReservationRepository $reservation,
@@ -42,6 +43,7 @@ class ReservationController extends AdminBaseController
         $this->slot= $slot;
         $this->reservationStatus = $reservationStatus;
         $this->plan = $plan;
+        $this->coupon = app('Modules\Ishoppingcart\Repositories\CouponRepository');
     }
 
     /**
@@ -66,7 +68,8 @@ class ReservationController extends AdminBaseController
         $slots = $this->slot->all();
         $status = $this->reservationStatus;
         $plans = $this->plan->all();
-        return view('ibooking::admin.reservations.create',compact('daysWeek','slots','status','plans'));
+        $coupons = $this->coupon->all();
+        return view('ibooking::admin.reservations.create',compact('daysWeek','slots','status','plans','coupons'));
     }
 
     /**

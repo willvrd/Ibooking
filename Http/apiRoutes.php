@@ -19,4 +19,7 @@ $router->group(['prefix' => '/ibooking/v1'], function (Router $router) {
    //====== SLOTS
    require('ApiRoutes/slotRoutes.php');
 
+   //====== RESERVATIONS
+   require('ApiRoutes/reservationRoutes.php');
+
 });
