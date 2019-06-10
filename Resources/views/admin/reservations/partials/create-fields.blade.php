@@ -53,12 +53,13 @@
         @endif
     </select>
 </div>
-
+{{--
 <br>
 <div class="form-group" style="margin-left:20px;">
     <div class="checkbox">
         <label><input name="notify" type="checkbox">{{trans('ibooking::common.form.notify')}}</label>
     </div>
 </div>
+--}}
 
 

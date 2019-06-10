@@ -30,11 +30,9 @@
                 </div>
             </div>
 
-            <div class="box box-primary">
-                <div class="box-body">
-                    @include('ibooking::admin.reservations.partials.coupon')
-                </div>
-            </div>
+
+            @include('ibooking::admin.reservations.partials.coupon')
+        
 
         </div>
 

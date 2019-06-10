@@ -48,6 +48,7 @@ class IbookingServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishConfig('ibooking', 'permissions');
+        $this->publishConfig('ibooking', 'settings');
 
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }

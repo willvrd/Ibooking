@@ -93,8 +93,8 @@ class EloquentReservationRepository extends EloquentBaseRepository implements Re
 
         $reservation = $this->model->create($data);
 
-        // Event to send email
-        event(new ReservationWasCreated($reservation, $data));
+       
+        //event(new ReservationWasCreated($reservation, $data));
 
         return $reservation;
        

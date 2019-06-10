@@ -41,7 +41,7 @@ $(function(){
     $("#plan_id").change(function(){
 
         var planID = $(this).find(':selected').data('id');
-        var url = "{{url('')}}/api/ibooking/v1/prices?filter={'planId':"+planID+"}";
+        var url = '{{url("")}}/api/ibooking/v1/prices?filter={"planId":'+planID+'}';
 
         var idDiv = "#prices";
 

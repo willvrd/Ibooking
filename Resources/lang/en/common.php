@@ -61,6 +61,10 @@ return [
         ],
     ],
 
+    'settings' => [
+        'form-email' => 'Emails',
+    ],
+
     
     'status_text' => 'Estado',
 

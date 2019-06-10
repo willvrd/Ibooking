@@ -8,13 +8,13 @@ class UserCreate
    
     public $userRepository;
     public $roleRepository;
-    public $fieldApiRepository;
+    //public $fieldApiRepository;
    
     public function __construct()
     {
        $this->userRepository = app('Modules\User\Repositories\UserRepository');
        $this->roleRepository = app('Modules\User\Repositories\RoleRepository');
-       $this->fieldApiRepository = app('Modules\Iprofile\Http\Controllers\Api\FieldApiController');
+       //$this->fieldApiRepository = app('Modules\Iprofile\Http\Controllers\Api\FieldApiController');
     }
 
     public function handle($event)
@@ -42,7 +42,7 @@ class UserCreate
                             $field['value'] = $value;
                             $field['name'] = $key;
 
-                            $this->fieldApiRepository->create(new Request(['attributes' => $field]));
+                            //$this->fieldApiRepository->create(new Request(['attributes' => $field]));
 
                         }
                     }

@@ -31,10 +31,11 @@ class ReservationSend
             $view = "ibooking::emails.Reservation";
             
             // Send User
-            $this->mail->to($reservation->customer->email)->send(new Reservation($reservation,$subject,$view));
+            //$this->mail->to($reservation->customer->email)->send(new Reservation($reservation,$subject,$view));
             
             // Send Admin
-            $email_to = explode(',',$this->setting->get('iforms::form-emails'));
+            $email_to = explode(',',$this->setting->get('ibooking::form-emails'));
+
             $this->mail->to($email_to[0])->send(new Reservation($reservation,$subject,$view));
 
         }
