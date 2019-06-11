@@ -100,6 +100,15 @@ class EloquentReservationRepository extends EloquentBaseRepository implements Re
        
     }
 
+    public function update($reservation,$data)
+    {
+       
+        $reservation->update($data);
+
+        return $reservation;
+       
+    }
+
     public function updateBy($criteria, $data, $params){
 
       // INITIALIZE QUERY

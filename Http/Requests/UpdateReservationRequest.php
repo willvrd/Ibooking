@@ -11,8 +11,6 @@ class UpdateReservationRequest extends BaseFormRequest
         return [
             'description' => 'required|min:2',
             'start_date' => 'required',
-            'slot_id' => 'required',
-            'day_id' => 'required',
         ];
     }
 

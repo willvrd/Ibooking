@@ -16,6 +16,14 @@ use Modules\Ibooking\Repositories\PlanRepository;
 use Modules\Ibooking\Entities\DaysWeek;
 use Modules\Ibooking\Entities\ReservationStatus;
 
+//**** Iprofile
+use Modules\Iprofile\Repositories\UserApiRepository;
+use Modules\Iprofile\Http\Controllers\Api\FieldApiController;
+use Modules\Iprofile\Entities\Field;
+
+//**** User
+use Modules\User\Repositories\UserRepository;
+
 class ReservationController extends AdminBaseController
 {
     /**
@@ -27,13 +35,19 @@ class ReservationController extends AdminBaseController
     private $reservationStatus;
     private $plan;
     private $coupon;
+    private $user;
+    private $userApi;
+    private $fieldApi;
 
     public function __construct(
         ReservationRepository $reservation,
         DaysWeek $daysWeek,
         SlotRepository $slot,
         ReservationStatus $reservationStatus,
-        PlanRepository $plan
+        PlanRepository $plan,
+        UserRepository $user,
+        UserApiRepository $userApi,
+        FieldApiController $fieldApi
     )
     {
         parent::__construct();
@@ -44,6 +58,9 @@ class ReservationController extends AdminBaseController
         $this->reservationStatus = $reservationStatus;
         $this->plan = $plan;
         $this->coupon = app('Modules\Ishoppingcart\Repositories\CouponRepository');
+        $this->user = $user;
+        $this->userApi = $userApi;
+        $this->fieldApi = $fieldApi;
     }
 
     /**
@@ -94,7 +111,31 @@ class ReservationController extends AdminBaseController
      */
     public function edit(Reservation $reservation)
     {
-        return view('ibooking::admin.reservations.edit', compact('reservation'));
+        $slots = $this->slot->all();
+        $status = $this->reservationStatus;
+        $plans = $this->plan->all();
+        $coupons = $this->coupon->all();
+
+    
+        /*
+        $user = $this->userApi->getItem($reservation->customer->id,(object)[
+            'take' => false,
+            'include' => ['fields']
+        ]);
+        dd($user);
+        */
+
+        $userFields = Field::where("user_id",$reservation->customer->id)->get();
+        
+        // Fix fields to frontend
+        $fields = [];
+        if(!empty($userFields) && count($userFields)>0){
+            foreach ($userFields as $f) {
+                $fields[$f->name] = $f->value;
+            }
+        }
+
+        return view('ibooking::admin.reservations.edit', compact('reservation','slots','status','plans','coupons','fields'));
     }
 
     /**

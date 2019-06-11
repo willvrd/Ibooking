@@ -4,6 +4,8 @@ namespace Modules\Ibooking\Presenters;
 
 use Laracasts\Presenter\Presenter;
 use Modules\Ibooking\Entities\Reservation;
+use Modules\Ibooking\Entities\Plan;
+use DateTime;
 
 class ReservationPresenter extends Presenter
 {
@@ -19,6 +21,22 @@ class ReservationPresenter extends Presenter
     public function status(){
         return $this->status->get($this->entity->status);
     }
+
+    public function dateF($date,$format){
+
+        $dateReservation = new DateTime($date);
+        $dFormat = $dateReservation->format($format);
+
+        return $dFormat;
+   
+    }
+
+    public function planName($id){
+        $plan = Plan::find($id);
+        return $plan->title;
+    }
+
+
 
     
 
