@@ -71,10 +71,16 @@ class Event extends Model
 
     }
 
-    public function getGalleryAttibute(){
+    public function getGalleryAttribute(){
 
         return $this->filesByZone('gallery')->get();
 
+    }
+
+    public function getUrlAttribute() {
+
+        return \URL::route(\LaravelLocalization::getCurrentLocale() . '.ibooking.event.slug',[$this->slug]);
+        
     }
 
     

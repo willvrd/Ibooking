@@ -18,3 +18,13 @@ if (!function_exists('ibooking_myfunction')) {
 
 }
  */
+
+/* Old Gallery
+if (! function_exists('ibooking_postgallery')){
+
+    function ibooking_postgallery($id){
+        $images = Storage::disk('publicmedia')->files('assets/ibooking/post/gallery/' . $id);
+        return $images;
+    }
+}
+ */
