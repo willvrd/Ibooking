@@ -32,6 +32,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Email</th>
+                                <th>Date</th>
                                 <th>{{ trans('ibooking::common.table.description') }}</th>
                                 <th>{{ trans('core::core.table.created at') }}</th>
                                 <th data-sortable="false">{{ trans('core::core.table.actions') }}</th>
@@ -43,6 +44,7 @@
                             <tr>
                                 <td>{{$reservation->id}}</td>
                                 <td>{{$reservation->customer->email}}</td>
+                                <td>{{$reservation->present()->dateF($reservation->start_date,'d-m-Y')}}</td>
                                 <td>{{$reservation->description}}</td>
                                 <td>
                                     <a href="{{ route('admin.ibooking.reservation.edit', [$reservation->id]) }}">
@@ -65,6 +67,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Email</th>
+                                <th>Date</th>
                                 <th>{{ trans('ibooking::common.table.description') }}</th>
                                 <th>{{ trans('core::core.table.created at') }}</th>
                                 <th>{{ trans('core::core.table.actions') }}</th>

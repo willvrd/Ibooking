@@ -46,7 +46,7 @@ class FrontendApiController extends BaseApiController
   }
 
   /**
-   * Find Reservations with Days and Slots
+   * Find Reservations, Days with Slots change of date
    * @return Response
    */
   public function findRDS(Request $request)
@@ -107,31 +107,47 @@ class FrontendApiController extends BaseApiController
             break;
           }
 
-          dd($slots);
+          $dateNow = date("Y-m-d");
+
+           // Esta reservando para el mismo dia
+          if($dateNow==$date){
+
+            //$datetimezone='America/Bogota'; // Europe/Madrid
+            //date_default_timezone_set($datetimezone);
+
+            $hourNow = date("H:i:s");
+
+            // Verificar la Hora de los Bloques
+            foreach ($slots as $index => $slot) {
+
+                // Hora ya paso
+                if($slot->hour<$hourNow){
+                   unset($slots[$index]);
+                }else{
+                    $rest = ibooking_subtractHours($slot->hour,$hourNow);
+                    if($rest<"03:00:00"){
+                        unset($slots[$index]);
+                    }
+                }
+            }
+
+          }//End if date now
          
+           // Verificar si hay bloques para mostrar (Si es true es porque esta FULL)
+          if(count($slots)>0){
+            $responseP = false;
+            $slots->sortBy('hour');
+          }else{
+            $responseP = true;
+          }
 
-      
+          $response['response'] = $responseP;
+          $response['reservations'] = $reservations;
+          $response['slots'] = $slots;
 
-          
 
       }// End if isset
     
-    
-
-     
-
-
-     
-     
-
-      //Request to Repository
-      //$slots = $this->slot->getItemsBy($this->getParamsRequest($request));
-
-      //Response
-      //$response = ['data' => SlotTransformer::collection($slots)];
-      
-      //If request pagination add meta-page
-      //$request->page ? $response['meta'] = ['page' => $this->pageTransformer($slots)] : false;
 
     } catch (\Exception $e) {
       

@@ -371,7 +371,8 @@
         	  var date = $("#alternate").attr("value");
             var dateToday = currentDate();
         	  //var url = "{{url('')}}/{{trans('ibooking::common.uri')}}/find_slots";
-            var url = '{{url("")}}/api/ibooking/v1/reservations?filter={"startDate":"'+date+'"}';
+            //var url = '{{url("")}}/api/ibooking/v1/reservations?filter={"startDate":"'+date+'"}';
+            var url = '{{url("")}}/api/ibooking/v1/frontend/findRDS?filter={"date":"'+date+'"}';
 
         	  $('#btn-continue-form').css("display","none");
 
@@ -397,15 +398,8 @@
                         
                     },
 
-                    success: function(result){
+                    success: function(data){
 
-                      console.log("Reservations:Good");
-                      reservations = result.data;
-                      searchDays(eventID,date,dateToday);
-                    
-                      
-                     
-                     /* 
                     if(data.response==true){ 
                       $(".ico-spinner").css("display","none");
                       $(".slot-information").css("display","block");
@@ -417,11 +411,11 @@
                     	var dhtmlSlot="";
                       var classtaken="",hourSlot="";
 
-                      for (datas in data.eventSlots) {
+                      for (datas in data.slots) {
 
                         classtaken = "slot-empty";
                         for (datas2 in data.reservations) {
-                          if(data.eventSlots[datas].id==data.reservations[datas2].event_slot_id){
+                          if(data.slots[datas].id==data.reservations[datas2].slot_id){
                             
                             if(data.reservations[datas2].status==2){
                                 classtaken = "slot-pending";
@@ -434,8 +428,8 @@
 
                         }
                        
-                        hourSlot = changeFormatHour(data.eventSlots[datas].name);
-                        dhtmSlot = "<div class='slot "+classtaken+"' data-id='"+data.eventSlots[datas].id+"' data-hour='"+data.eventSlots[datas].name+"'>"+hourSlot+"</div>";
+                        hourSlot = changeFormatHour(data.slots[datas].hour);
+                        dhtmSlot = "<div class='slot "+classtaken+"' data-id='"+data.slots[datas].id+"' data-hour='"+data.slots[datas].hour+"'>"+hourSlot+"</div>";
                         $(dhtmSlot).appendTo(".slots");
                       }
 
@@ -443,7 +437,7 @@
                       $(".btn-selectday").show();
                       $(".slot-information").css("display","block");
                     }
-                    */
+                   
 
                     finding = false;
                     $('#datepicker').removeClass("disabledCalendar");

@@ -123,7 +123,7 @@ class PublicController extends BasePublicController
      *
      * @return Response
      */
-    public function reservationCreate(IbookingReservationFrontRequest $request){
+    public function reservationCreate(Request $request){
         
         dd("Crear reservacion");
         /*

@@ -7,17 +7,11 @@
  * @param  String $xxxxx
  * @return Float
  */
-
-/*
-if (!function_exists('ibooking_myfunction')) {
-
-    function ibooking_myfunction()
-    {
-
+if (!function_exists('ibooking_subtractHours')) {
+    function ibooking_subtractHours($hourFin,$hourIni){
+        return (date("H:i:s", strtotime("00:00:00") + strtotime($hourFin) - strtotime($hourIni) ));
     }
-
 }
- */
 
 /* Old Gallery
 if (! function_exists('ibooking_postgallery')){
