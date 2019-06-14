@@ -24,11 +24,19 @@ if (! App::runningInConsole()) {
                 'uses' => 'PublicController@giftcard',
             ]);
 
-            
-            /*
-            $router->post('find_slots', [
+            $router->post('/reservation/create', [
+                'as' => 'ibooking.reservation.create',
+                'uses' => 'PublicController@reservationCreate',
+            ]);
+
+            //Ajax routes
+            $router->get('findSlots', [
+                'as' => 'ibooking.ajax.findslots',
                 'uses' => 'PublicController@findSlots',
             ]);
+
+            /*
+            
 
             // New
             $router->post('findListPrices', [
@@ -41,10 +49,7 @@ if (! App::runningInConsole()) {
             ]);
             
 
-            $router->post('/create', [
-                'as' => 'ibooking.reservation.create',
-                'uses' => 'PublicController@createReservation',
-            ]);
+           
             
             // Testing Old
             $router->post('/create2018', [

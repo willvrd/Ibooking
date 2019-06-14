@@ -14,7 +14,9 @@ class DayTransformer extends Resource
       'dayName' => $this->when($this->present()->name,$this->present()->name),
       'status' => $this->when($this->status,$this->status),
       'statusName' => $this->when($this->present()->status,$this->present()->status),
+      'date' => $this->when($this->date,$this->date),
       'events' => EventTransformer::collection($this->whenLoaded('events')),
+      'slots' => SlotTransformer::collection($this->whenLoaded('slots')),
       'created_at' => $this->when($this->created_at,$this->created_at),
       'updated_at' => $this->when($this->updated_at,$this->updated_at)
     ];

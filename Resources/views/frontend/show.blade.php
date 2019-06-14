@@ -36,6 +36,11 @@
         overflow: hidden; 
     }
 
+    /*Color para pruebas*/
+    .ibooking-single{
+        background-color:#02020245;
+    }
+
 </style>
 
 @section('content')
@@ -146,14 +151,15 @@
         <div class="row block-booking-video">
 
             <div class="col-xs-12 col-sm-12 col-md-6">
-                {{--
                 @include('ibooking::frontend.booking.index')
-                --}}
             </div>
     
             <div class="col-xs-12 col-sm-12 col-md-5 col-md-offset-1 block-video"> 
                 @if(isset($event->video))
+                    Video
+                    {{--
                     <iframe width="100%" height="315" src="{{$event->video}}" frameborder="0" allowfullscreen></iframe>
+                    --}}
                 @else
                     <div class="alert alert-danger">
                         {{trans('ibooking::frontend.dontexist')}}

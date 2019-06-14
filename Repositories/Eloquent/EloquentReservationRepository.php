@@ -19,7 +19,8 @@ class EloquentReservationRepository extends EloquentBaseRepository implements Re
 
       // RELATIONSHIPS
       $defaultInclude = [];
-      $query->with(array_merge($defaultInclude, $params->include));
+      if(isset($params->include))
+        $query->with(array_merge($defaultInclude, $params->include));
 
       // FILTERS
       if($params->filter) {
@@ -47,6 +48,11 @@ class EloquentReservationRepository extends EloquentBaseRepository implements Re
         //add filter by status id
         if (isset($filter->status)){
             $query->where('status', $filter->status);
+        }
+
+         //add filter by start_date
+        if (isset($filter->startDate)){
+          $query->whereDate('start_date', $filter->startDate);
         }
 
       }

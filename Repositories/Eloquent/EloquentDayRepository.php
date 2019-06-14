@@ -45,7 +45,29 @@ class EloquentDayRepository extends EloquentBaseRepository implements DayReposit
             $query->where('status', $filter->status);
         }
 
+        //add filter by event id
+        if (isset($filter->events)){
+          /*
+          is_array($filter->events) ? true : $filter->events = [$filter->events];
+          $query->whereIn('ibooking__day_event.event_id', $filter->events);
+          */
+        }
+
+        //add filter by day Date
+        if (isset($filter->dayDate)){
+          $query->whereDate('date', $filter->dayDate);
+          //$dayNumber = date('N',strotime($filter->dayDate));
+          //$query->where('num',"=",$dayNumber);
+        }
+
+        //add filter by day Date
+        if(isset($filter->dayNum)){
+          $query->where('num',"=",$filter->dayNum);
+        }
+
       }
+
+     
 
       /*== FIELDS ==*/
       if (isset($params->fields) && count($params->fields))

@@ -22,4 +22,7 @@ $router->group(['prefix' => '/ibooking/v1'], function (Router $router) {
    //====== RESERVATIONS
    require('ApiRoutes/reservationRoutes.php');
 
+   //====== FrontendProccess
+   require('ApiRoutes/frontendRoutes.php');
+
 });
