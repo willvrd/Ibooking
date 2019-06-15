@@ -12,10 +12,17 @@ use Modules\Setting\Contracts\Setting;
 
 // Ibooking
 use Modules\Ibooking\Repositories\EventRepository;
+use Modules\Ibooking\Repositories\PlanRepository;
 use Modules\Ibooking\Repositories\ReservationRepository;
+
+// Events
+use Modules\Ibooking\Events\ReservationWasCreated;
 
 // Ishoppingcart
 use Modules\Ishoppingcart\Repositories\CouponRepository;
+
+//Request
+use Modules\Ibooking\Http\Requests\CreateReservationFrontRequest;
 
 class PublicController extends BasePublicController
 {
@@ -24,6 +31,7 @@ class PublicController extends BasePublicController
      */
 
     private $event;
+    private $plan;
     private $reservation;
     private $eventSlot;
     private $coupon; 
@@ -32,6 +40,7 @@ class PublicController extends BasePublicController
 
     public function __construct(
         EventRepository $event, 
+        PlanRepository $plan, 
         ReservationRepository $reservation, 
         CouponRepository $coupon, 
         Setting $setting
@@ -39,6 +48,7 @@ class PublicController extends BasePublicController
     {
         parent::__construct();
         $this->event = $event;
+        $this->plan = $plan;
         $this->reservation = $reservation;
         $this->coupon = $coupon;
         $this->setting=$setting;
@@ -80,7 +90,7 @@ class PublicController extends BasePublicController
 
         $event = $this->event->findBySlug($slug);
 
-        //clearReservation();
+        $this->reservation->clearReservation();
 
         return view($tpl, compact('event'));
 
@@ -106,125 +116,72 @@ class PublicController extends BasePublicController
 
     }
 
-    /**
-     * Ajax Request
-     *
-     * @return Response
-     */
-    public function findSlots(Request $request){
-
-        dd($request);
-
-
-    }
-
+    
     /**
      * Create Reservation
      *
      * @return Response
      */
-    public function reservationCreate(Request $request){
+    public function reservationCreate(CreateReservationFrontRequest $request){
         
-        dd("Crear reservacion");
-        /*
-        $newReservation = new Reservation;
-        $newReservation->fullname = $request->input('buyer_name');
-        $newReservation->email = $request->input('buyer_email');
-        $newReservation->phone = $request->input('buyer_phone');
-        $newReservation->description = $request->input('descriptionall');
-        $newReservation->event_slot_id = $request->input('buyer_eventSlotID');
-        $newReservation->date = $request->input('buyer_date');
-        $newReservation->cantPer = $request->input('buyer_cantPer');
-        $newReservation->mode = $request->input('mode');
+        $data = $request->all();
 
-        // Revisa si el Precio que selecciono corresponde al Modo y a la cantidad de Personas
-        $entitie = "\Modules\Ibooking\Entities\Mode";
-        $resultCheck = $this->checkPriceModeUser($request->input('buyer_eventID'),$request->input('mode'),$entitie,$request->input('buyer_value'),$request->input('buyer_cantPer'));
+        try{
+    
+            \DB::beginTransaction();
 
-        if($resultCheck)
-            $newReservation->value = $request->input('buyer_value');
-        else
-            return redirect()->back();
+            //Check the price with plan and number people
+            $priceBD = $this->plan->checkPrice($data);
+
+            // If Price is a fail
+            if(!$priceBD)
+                return redirect()->back();
+
+            // Reservation Pending
+            $data["status"] = 2; 
         
-        // Proceso del Cupon
-        if(!empty($request->input('coupon_code'))){
+            //Create
+            $reservation = $this->reservation->create($data);
 
-           $dateNow = date("Y-m-d");
-           $coupon = $this->coupon->findByCode($request->input('coupon_code'),$dateNow);
+            \DB::commit(); //Commit to Data Base
 
-           if(count($coupon)==0){
-                // Cupon ya no esta disponible (Paso las fechas)
-              return redirect()->back();
+            $request->session()->put('reservationID', $reservation->id);
+            return redirect()->route(locale().'.checkout');
+
+        } catch (\Exception $e) {
+
+            \Log::error($e);
+            \DB::rollback();//Rollback to Data Base
             
-           }else{
-                if(($coupon->cant>0)){
-
-                    $newReservation->coupon_id = $coupon->id;
-                    $entitie = "\Modules\Ibooking\Entities\Mode";
-
-                    // Revisa si el Precio que selecciono corresponde al Modo y a la cantidad de Personas
-                    $resultCheck = $this->checkPriceModeUser($request->input('buyer_eventID'),$request->input('mode'),$entitie,$request->input('buyer_value'),$request->input('buyer_cantPer'));
-
-                    if($resultCheck)
-                        $price = $request->input('buyer_value');
-                    else
-                        return redirect()->back();
-                   
-                    // Verifica el tipo de cupon
-                    if($coupon->type=="p"){
-                        $discount = ($price * $coupon->value) / 100;
-                    }else{
-                        $discount = $coupon->value;
-                    }
-
-
-                    $amount = (float)$price - (float)$discount;
-                    
-                    // Cancela completo
-                    if($amount<=0){
-
-                        $newReservation->value = $request->input('buyer_value');
-                        $newReservation->status = 1;
-                       
-                        $newReservation->save();
-
-                        $coupon->cant = $coupon->cant - 1;
-                        $coupon->save();
-
-                        $this->sendEmail($newReservation,$coupon);
-
-                        return redirect()->route("homepage");
-                    }else{
-                        // Queda un saldo a cancelar
-                        $newReservation->value = $amount;
-                        $newReservation->status = 2;
-                        
-                        $newReservation->save();
-
-                        $coupon->cant = $coupon->cant - 1;
-                        $coupon->save();
-
-                        $request->session()->put('reservationID', $newReservation->id);
-                        return redirect()->route(locale().'.checkout');
-                    }
-                    
-                }else{
-                    // Ya no se puede cambiar mas
-                     return redirect()->back();
-                }
-           }
-          
+            return redirect()->back();
         }
 
-        $newReservation->status = 2;
-        $newReservation->save();
-
-        $request->session()->put('reservationID', $newReservation->id);
-
-        return redirect()->route(locale().'.checkout');
-
-        */
     }
+
+     /**
+     * Prueba de correo
+     *
+     * @return Response
+     */
+    public function sendEmail($reservation){
+
+        $email_from = $this->setting->get('iforms::from-email');
+        $email_to = explode(',',$this->setting->get('ibooking::form-emails'));
+        $sender  = $this->setting->get('core::site-name');
+
+        //$order = "R".$reservation->id."C".$coupon->id; // Original
+        $order = "R".$reservation->id."C"; //testing
+
+        $content=['order'=>$order,'reservation'=>$reservation];
+        
+        //$mail = emailSend(['email_from'=>[$email_from],'theme' => 'ibooking::email.success_order','email_to' => $reservation->email,'subject' => 'Confirmación de pago de orden', 'sender'=>$sender, 'data' => array('title' => 'Confirmación de pago de orden','intro'=>'Felicidades su reservación fue exitosa','content'=>$content)]);
+
+        $mail= emailSend(['email_from'=>[$email_from],'theme' => 'ishoppingcart::email.success_order','email_to' => $email_to,'subject' => 'Confirmación de pago de orden', 'sender'=>$sender, 'data' => array('title' => 'Confirmación de pago de orden','intro'=>'Confirmación de Nueva Orden','content'=>$content)]);
+        
+       
+    }
+
+
 
    
 

@@ -59,5 +59,11 @@ class CacheReservationDecorator extends BaseCacheDecorator implements Reservatio
     $this->clearCache();
     return $this->repository->deleteBy($criteria, $params);
   }
+
+  public function clearReservation()
+  {
+    $this->clearCache();
+    return $this->repository->clearReservation();
+  }
   
 }

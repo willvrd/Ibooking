@@ -25,6 +25,18 @@ return [
     'form' => [
     ],
     'messages' => [
+        'firstname is required'=>'El Nombre es requerido',
+        'firstname min 2'=>'El Nombre debe contener mínimo dos caracteres',
+        'lastname is required'=>'El Apellido  es requerido',
+        'lastname min 2'=>'El Apellido debe contener mínimo dos caracteres',
+        'email is required'=>'El Email es requerido',
+        'email min 2'=>'El Email debe contener mínimo dos caracteres',
+        'phone is required'=>'El Teléfono es requerido',
+        'phone min 7'=>'El Teléfono debe contener mínimo 7 caracteres',
+        'date is required'=>'La Fecha es requerida',
+        'date min 2'=>'La Fecha debe contener mínimo dos caracteres',
+        'value is required'=>'El Valor es requerido',
+        'value min 1'=>'El Valor debe contener mínimo un caracteres',
     ],
     'validation' => [
     ],

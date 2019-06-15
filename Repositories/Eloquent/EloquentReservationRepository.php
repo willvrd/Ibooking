@@ -8,6 +8,8 @@ use Modules\Core\Repositories\Eloquent\EloquentBaseRepository;
 use Modules\Ibooking\Events\ReservationIsCreating;
 use Modules\Ibooking\Events\ReservationWasCreated;
 
+use DateTime;
+
 class EloquentReservationRepository extends EloquentBaseRepository implements ReservationRepository
 {
 
@@ -170,6 +172,34 @@ class EloquentReservationRepository extends EloquentBaseRepository implements Re
         $model->delete();
 
       }
+    }
+
+    public function clearReservation(){
+      
+      $reservations = $this->model->where("status",2)->get(); //Pending
+      \Log::info('Revisando Reservaciones - Cantidad: '.count($reservations));
+
+      if(count($reservations)>0){
+
+        $hourNow = date("H:i:s");
+        foreach ($reservations as $reservation) {
+
+            $dateReservation = "";
+            $hourReservation = "";
+
+            $dateReservation = new DateTime($reservation->created_at);
+            $hourReservation = $dateReservation->format('H:i:s');
+
+            $diff = date("H:i:s", strtotime("00:00:00") + strtotime($hourNow) - strtotime($hourReservation) );
+
+            if($diff>="00:30:00"){
+                $data['status'] = 3;
+                $reservation->update($data);
+            }
+
+        }
+      }// End if
+
     }
 
 

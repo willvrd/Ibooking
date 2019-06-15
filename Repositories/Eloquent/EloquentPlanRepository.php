@@ -51,6 +51,11 @@ class EloquentPlanRepository extends EloquentBaseRepository implements PlanRepos
             $query->where('status', $filter->status);
         }
 
+        //add filter by event id
+        if (isset($filter->eventId)){
+          $query->where('event_id', $filter->eventId);
+        }
+
       }
 
       /*== FIELDS ==*/
@@ -79,7 +84,7 @@ class EloquentPlanRepository extends EloquentBaseRepository implements PlanRepos
       $query->with(array_merge($includeDefault, $params->include));
 
       // FIELDS
-      if ($params->fields) {
+      if (isset($params->fields)) {
         $query->select($params->fields);
       }
       return $query->first();
@@ -171,5 +176,34 @@ class EloquentPlanRepository extends EloquentBaseRepository implements PlanRepos
       }
     }
 
+    /**
+     * Check the price with plan and number people
+     *
+     * @return Response
+     */
+    public function checkPrice($data){
+
+      $filter =array( "status" => 1,);
+      $include = array('prices');
+
+      $plan = $this->getItem($data['plan_id'],(object)[
+                'take' => false,
+                'include' => $include,
+                'filter' => json_decode(json_encode($filter))
+      ]);
+
+      $priceBD = false;
+
+      if(isset($plan->prices)){
+          foreach($plan->prices as $index => $price){
+              if($price->price==$data["value"] && $price->people==$data["people"]):
+                  $priceBD = true; 
+              endif; 
+          }
+      }
+
+      return $priceBD;
+
+    }
 
 }

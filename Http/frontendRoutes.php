@@ -29,44 +29,15 @@ if (! App::runningInConsole()) {
                 'uses' => 'PublicController@reservationCreate',
             ]);
 
-            //Ajax routes
-            $router->get('findSlots', [
-                'as' => 'ibooking.ajax.findslots',
-                'uses' => 'PublicController@findSlots',
-            ]);
+           
 
             /*
-            
-
-            // New
-            $router->post('findListPrices', [
-                'uses' => 'PublicController@findListPrices',
-            ]);
-
+  
             // New
             $router->post('findDays', [
                 'uses' => 'PublicController@findDays',
             ]);
-            
-
-           
-            
-            // Testing Old
-            $router->post('/create2018', [
-                'as' => 'ibooking.reservation.create2018',
-                'uses' => 'PublicController@createReservation2018',
-            ]);
-
-            // Testing News
-            $router->post('/create2019', [
-                'as' => 'ibooking.reservation.create2019',
-                'uses' => 'PublicController@createReservation2019',
-            ]);
-
-           
             */
-
-         
 
     });
 

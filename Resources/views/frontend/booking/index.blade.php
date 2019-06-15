@@ -8,7 +8,7 @@
     </div>
     <div class="clearfix"></div>
 
-      {!! $errors->first("buyer_name", '<div class="alert alert-danger">:message</div>') !!}
+      {!! $errors->first("first_name", '<div class="alert alert-danger">:message</div>') !!}
       {!! $errors->first("buyer_email", '<div class="alert alert-danger">:message</div>') !!}
       {!! $errors->first("buyer_phone", '<div class="alert alert-danger">:message</div>') !!}
 
@@ -304,10 +304,6 @@
 
         var descriptionAll = "";
 
-        //descriptionAll = "{{$event->title}} ( "+changeFormatDate(date)+" - "+convertHour(eventslotHour)+" )";
-
-        //descriptionAll = "{{$event->title}} ( "+changeFormatDate(date)+" - "+eventslotHour+" )";
-
         descriptionAll = "{{$event->title}} ( "+changeFormatDate(date)+" - "+changeFormatHour(eventslotHour)+" )";
 
 
@@ -354,6 +350,8 @@
         $('#buyer_cantPer').val("0");
 
         var modeID = $(this).find(':selected').data('id');
+        $('#plan_id').val(modeID);
+
         findPrices(modeID);
        
       });
@@ -462,15 +460,7 @@
             }
       }
 
-      function searchDays(eventID,date,dateToday){
-        
-        console.log("Day:Searching");
-        var url = '{{url("")}}/api/ibooking/v1/days?filter={"date":"'+date+'"}';
-
-      }
-
-
-
+      
       function findCoupon(){
 
         var couponCode = $('#coupon_code').val();
@@ -531,17 +521,15 @@
       }
 
       function findPrices(modeID){
-
-
-        var url = "{{url('')}}/{{trans('ibooking::common.uri')}}/findListPrices";
+        
+        var url = '{{url("")}}/api/ibooking/v1/prices?filter={"planId":'+modeID+'}';
         var idDiv = "#pricesDin";
 
         if(modeID!="0"){
 
           $.ajax({
             url:url,
-            type:"POST",
-            data:{modeID:modeID},
+            type:"GET",
             dataType:"JSON",
             beforeSend: function(){
 
@@ -553,24 +541,21 @@
                
             },
 
-            success: function(data){
+            success: function(result){
 
-              if(data.modeInfor!=null){
+              if(result!=null){
                 html = "";
                 counter = 0;
+                for (datas in result.data) {
+                    planPeople = result.data[datas].people;
+                    planPrice = result.data[datas].price;
 
-                for (datas in data.modeInfor.listprices) {
-
-                  Mdes = data.modeInfor.listprices[datas].desc;
-                  Mval = data.modeInfor.listprices[datas].value;
-
-                  html += createRadio(Mdes,Mval,counter);
-                  counter++;
-
+                    html += createRadio(planPeople,planPrice,counter);
+                    counter++;
                 }
                 $(idDiv).append(html);
               }
-
+            
               $(".listprices-spinner").css("display","none");
               $('#mode').removeAttr('disabled');
               $(".btn-ibooking-form").css("display","block");

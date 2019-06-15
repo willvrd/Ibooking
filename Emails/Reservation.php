@@ -2,16 +2,14 @@
 
 namespace Modules\Ibooking\Emails;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
+
 
 use Modules\Ibooking\Repositories\ReservationRepository;
 
-class Reservation extends Mailable implements ShouldQueue
+class Reservation extends Mailable
 {
-    use Queueable, SerializesModels;
+   
 
     public $reservation;
     public $subject;

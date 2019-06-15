@@ -59,5 +59,17 @@ class CachePlanDecorator extends BaseCacheDecorator implements PlanRepository
     $this->clearCache();
     return $this->repository->deleteBy($criteria, $params);
   }
+
+  /**
+   * find a resource by id or slug
+   *
+   * @return object
+   */
+  public function checkPrice($data)
+  {
+    return $this->remember(function () use ($data) {
+      return $this->repository->checkPrice($data);
+    });
+  }
   
 }
