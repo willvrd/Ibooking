@@ -45,20 +45,19 @@ class Coupon
                 if($amount<=0){
                             
                     $data["value"] = 0;
-                    $data["status"] = 1;
-                           
-                    $coupon->cant = $coupon->cant - 1;
-                    $coupon->save();
+                    $data["status"] = 1; //Approved
     
                 }else{
 
                     // Queda un saldo a cancelar
                     $data["value"] = $amount;
 
-                    $coupon->cant = $coupon->cant - 1;
-                    $coupon->save();
-
                 }
+
+                $coupon->cant = $coupon->cant - 1;
+                $coupon->save();
+
+                $data["couponInfor"] = $coupon->id;
                         
             }else{
                 // Ya no se puede cambiar mas

@@ -168,19 +168,19 @@
 
       dateIni1 = currenYear1+"-"+addZero(currentMonth1)+"-01"; 
       
-      //findDaysStatus(dateIni1);
+      findDaysStatus(dateIni1);
       
 
       function findDaysStatus(dateIni){
         
         var eventID = {{$event->id}};
-        var url = "{{url('')}}/{{trans('ibooking::common.uri')}}/findDays";
+       
+        var url = '{{url("")}}/api/ibooking/v1/frontend/findDaysStatus?filter={"date":"'+dateIni+'"}';
 
         $.ajax({
           
           url:url,
-          type:"POST",
-          data:{eventID:eventID,date:dateIni},
+          type:"GET",
           dataType:"JSON",
           beforeSend: function(){
             
@@ -246,7 +246,7 @@
             var currentMonth1 = datetest.getMonth()+1;
             var currenYear1 = datetest.getFullYear();
             dateIni1 = currenYear1+"-"+addZero(currentMonth1)+"-01"; 
-            //findDaysStatus(dateIni1);
+            findDaysStatus(dateIni1);
             
           
           },
@@ -254,7 +254,7 @@
           onChangeMonthYear: function(year, month, datepicker) {
                
             dateIni = year+"-"+addZero(month)+"-01"; 
-            //findDaysStatus(dateIni);
+            findDaysStatus(dateIni);
         
           },
 
@@ -368,20 +368,18 @@
             var eventID = {{$event->id}};
         	  var date = $("#alternate").attr("value");
             var dateToday = currentDate();
-        	  //var url = "{{url('')}}/{{trans('ibooking::common.uri')}}/find_slots";
-            //var url = '{{url("")}}/api/ibooking/v1/reservations?filter={"startDate":"'+date+'"}';
+        	 
             var url = '{{url("")}}/api/ibooking/v1/frontend/findRDS?filter={"date":"'+date+'"}';
 
         	  $('#btn-continue-form').css("display","none");
 
         	  if (date!="" && date>=dateToday){
               
-              console.log("Reservations:Searching");
+              //console.log("Reservations:Searching");
 
         	  	 $.ajax({
                     url:url,
                     type:"GET",
-                    //data:{date:date,eventID:eventID},
                     dataType:"JSON",
                     beforeSend: function(){
                        

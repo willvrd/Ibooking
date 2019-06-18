@@ -84,13 +84,10 @@
                 <h2 class="text-center">Precio</h2>
 
                 <span class="text-center">
-                    {{$event->inforprice}} €
-                    <div style="font-size:15px;">
-                        Según jugadores
-                    </div>
+                     85 €
                 </span>
 
-                @php $precio = $event->price; @endphp
+                @php $precio = 85; @endphp
 
             </div>
 

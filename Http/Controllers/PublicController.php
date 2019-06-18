@@ -151,19 +151,20 @@ class PublicController extends BasePublicController
             //Create
             $reservation = $this->reservation->create($data);
 
+            \DB::commit(); //Commit to Data Base
+
             //The pay was with the coupon and full
             if($data["value"]==0){
-                $this->sendEmail($reservation,$coupon);
+                $this->sendEmail($reservation,$data);
                 return redirect()->route("homepage");
             }else{
                 $request->session()->put('reservationID', $reservation->id);
                 return redirect()->route(locale().'.checkout');
             }
 
-            \DB::commit(); //Commit to Data Base
-
         } catch (\Exception $e) {
 
+            //dd($e);
             \Log::error($e);
             \DB::rollback();//Rollback to Data Base
             
@@ -178,13 +179,13 @@ class PublicController extends BasePublicController
      *
      * @return Response
      */
-    public function sendEmail($reservation){
+    public function sendEmail($reservation,$data){
 
         $email_from = $this->setting->get('iforms::from-email');
         $email_to = explode(',',$this->setting->get('ibooking::form-emails'));
         $sender  = $this->setting->get('core::site-name');
 
-        $order = "R".$reservation->id."C".$coupon->id; // Original
+        $order = "R".$reservation->id."C".$data["couponInfor"];
         
         $content=['order'=>$order,'reservation'=>$reservation];
         
