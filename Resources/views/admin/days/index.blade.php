@@ -33,6 +33,7 @@
                                 <th>{{ trans('ibooking::days.table.day') }}</th>
                                 <th>Status</th>
                                 <th>{{ trans('ibooking::days.table.date') }}</th>
+                                <th>{{ trans('ibooking::slots.plural') }}</th>
                                 <th>{{ trans('core::core.table.created at') }}</th>
                                 <th data-sortable="false">{{ trans('core::core.table.actions') }}</th>
                             </tr>
@@ -49,6 +50,13 @@
                                     </span>
                                 </td>
                                 <td>{{$day->date}}</td>
+                                <td>
+                                    @if(count($day->slots)==0)
+                                        <span style="color:red;font-weight:bold;">{{count($day->slots)}}<span>
+                                    @else
+                                        {{count($day->slots)}}
+                                    @endif
+                                </td>
                                 <td>
                                     <a href="{{ route('admin.ibooking.day.edit', [$day->id]) }}">
                                         {{ $day->created_at }}
@@ -70,6 +78,7 @@
                                 <th>{{ trans('ibooking::days.table.day') }}</th>
                                 <th>Status</th>
                                 <th>{{ trans('ibooking::days.table.date') }}</th>
+                                <th>Horas Asignadas</th>
                                 <th>{{ trans('core::core.table.created at') }}</th>
                                 <th>{{ trans('core::core.table.actions') }}</th>
                             </tr>

@@ -63,6 +63,7 @@ class EloquentDayRepository extends EloquentBaseRepository implements DayReposit
         //add filter by day Date
         if(isset($filter->dayNum)){
           $query->where('num',"=",$filter->dayNum);
+          $query->WhereNull('date');
         }
 
       }

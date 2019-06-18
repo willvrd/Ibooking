@@ -105,39 +105,44 @@ class FrontendApiController extends BaseApiController
 
           }// and IF days
 
-          foreach($days as $day){
-            $slots = $day->slots;
-            break;
-          }
+          $slots = null;
+          if(count($days)>0){
 
-          $dateNow = date("Y-m-d");
-
-           // Esta reservando para el mismo dia
-          if($dateNow==$date){
-
-            //$datetimezone='America/Bogota'; // Europe/Madrid
-            //date_default_timezone_set($datetimezone);
-
-            $hourNow = date("H:i:s");
-
-            // Verificar la Hora de los Bloques
-            foreach ($slots as $index => $slot) {
-
-                // Hora ya paso
-                if($slot->hour<$hourNow){
-                   unset($slots[$index]);
-                }else{
-                    $rest = ibooking_subtractHours($slot->hour,$hourNow);
-                    if($rest<"03:00:00"){
-                        unset($slots[$index]);
-                    }
-                }
+            foreach($days as $day){
+              $slots = $day->slots;
+              break;
             }
 
-          }//End if date now
-         
+            $dateNow = date("Y-m-d");
+
+            // Esta reservando para el mismo dia
+            if($dateNow==$date){
+
+              //$datetimezone='America/Bogota'; // Europe/Madrid
+              //date_default_timezone_set($datetimezone);
+
+              $hourNow = date("H:i:s");
+
+              // Verificar la Hora de los Bloques
+              foreach ($slots as $index => $slot) {
+
+                  // Hora ya paso
+                  if($slot->hour<$hourNow){
+                    unset($slots[$index]);
+                  }else{
+                      $rest = ibooking_subtractHours($slot->hour,$hourNow);
+                      if($rest<"03:00:00"){
+                          unset($slots[$index]);
+                      }
+                  }
+              }
+
+            }//End if date now
+
+          }// End if days
+
            // Verificar si hay bloques para mostrar (Si es true es porque esta FULL)
-          if(count($slots)>0){
+          if(count($slots)){
             $responseP = false;
             $slots->sortBy('hour');
           }else{
@@ -253,32 +258,38 @@ class FrontendApiController extends BaseApiController
 
             }// and IF days
 
-            foreach($days as $day){
-              $slots = $day->slots;
-              break;
-            }
-
-            // Slots by day
-            $sloter =  $slots;
-            $sloterTotal = count($sloter);
-            
-            // Filter reservation by day
-            $filtered = $reservations->where('start_date', $fullDate.' 00:00:00');
-            $reservationsDay = $filtered->all();
-            
+            $sloterTotal = 0;
             $reservationsTotal = 0;
-            foreach($sloter as $slot){
 
-                foreach ($reservationsDay as $re) {
-                        //echo "SlotName {$slot->id} - Reservation Slot {$re->slot_id} <br> ";
-                    if($slot->id==$re->slot_id){
-                        $reservationsTotal++;
-                        break;
-                    }
-                       
-                }
-                    
-            }
+            if(count($days)>0){
+
+              foreach($days as $day){
+                $slots = $day->slots;
+                break;
+              }
+
+              // Slots by day
+              $sloter =  $slots;
+              $sloterTotal = count($sloter);
+
+               // Filter reservation by day
+              $filtered = $reservations->where('start_date', $fullDate.' 00:00:00');
+              $reservationsDay = $filtered->all();
+
+              foreach($sloter as $slot){
+
+                  foreach ($reservationsDay as $re) {
+                          //echo "SlotName {$slot->id} - Reservation Slot {$re->slot_id} <br> ";
+                      if($slot->id==$re->slot_id){
+                          $reservationsTotal++;
+                          break;
+                      }
+                        
+                  }
+                      
+              }// End foreach reservations
+
+            }// End count days
 
             // Code for Testing
             //if($fullDate=="2019-06-23"){
