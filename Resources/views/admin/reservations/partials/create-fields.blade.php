@@ -47,7 +47,8 @@
     <select class="form-control" id="slot_id" name="slot_id" required>
         <option value="">{{trans('ibooking::common.select')}}</option>
         @if(count($slots)>0)
-            @foreach ($slots as $slot)
+            @php $slotsOrder = $slots->sortBy('hour'); @endphp
+            @foreach ($slotsOrder as $slot)
                 <option value="{{$slot->id}}">{{$slot->hour}}</option>
             @endforeach
         @endif

@@ -28,31 +28,9 @@ if (! App::runningInConsole()) {
                 'as' => 'ibooking.reservation.create',
                 'uses' => 'PublicController@reservationCreate',
             ]);
-
-           
-
-            /*
-  
-            // New
-            $router->post('findDays', [
-                'uses' => 'PublicController@findDays',
-            ]);
-            */
-
+ 
     });
 
-    /*
-    $router->group(['prefix' => 'giftcard'], function (Router $router){
-
-        $locale = LaravelLocalization::setLocale() ?: App::getLocale();
-
-        $router->get('{eventslug}', [
-            'as' => $locale . '.ibooking.giftcard.event',
-            'uses' => 'PublicController@giftcard',
-        ]);
-
-    });
     
-    */
    
 }  

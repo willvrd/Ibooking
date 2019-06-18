@@ -27,6 +27,9 @@ use Modules\Ibooking\Repositories\SlotRepository;
 //Support
 use Illuminate\Support\Facades\Auth;
 
+//Others
+use Carbon\Carbon;
+
 class FrontendApiController extends BaseApiController
 {
 
@@ -159,7 +162,164 @@ class FrontendApiController extends BaseApiController
     return response()->json($response, $status ?? 200);
   }
 
-  
+   /**
+   * Find Days status Availables to Calendar
+   * @return Response
+   */
+  public function findDaysStatus(Request $request)
+  {
+    try {
+      
+      $params = $this->getParamsRequest($request);
+
+      if(isset($params->filter)){
+        $filter = $params->filter;
+        $date = $filter->date;
+
+        $responseP = false;
+        $data = collect([]);
+
+        $dateStart=  Carbon::parse($date);
+        $dateEnd = $dateStart->endOfMonth();
+
+        $dMonth = $dateStart->month;
+        if ($dMonth < 10)
+          $dMonth = "0".$dMonth;
+
+        $dYear = $dateStart->year;
+
+        $daysMonth = $dateStart->daysInMonth;
+
+        // Get Reservations Approvers for this month
+        $filterReservation =array(
+          "date" => array(
+            "field" => "start_date",
+            "from" => $date,
+            "to" => $dateEnd->toDateString()
+          ),
+          "status" => 1,
+          "orderBy" => array(
+            "field" => "start_date",
+          ),
+        );
+        $reservations = $this->reservation->getItemsBy((object)[
+          'take' => false,
+          'filter' => json_decode(json_encode($filterReservation))
+        ]);
+
+        //if(count($reservations)>0){
+          $responseP = true;
+          // For each day
+          for($i=0;$i<$daysMonth;$i++){
+
+            $dDay = $i+1;
+            if ($dDay < 10)
+                $dDay = "0".$dDay;
+
+            $fullDate = $dYear."-".$dMonth."-".$dDay;
+            $available = true;
+
+
+            // Get Days for a date Enabled
+            $filterDay =array(
+              "status" => 1,
+              "dayDate" => $fullDate
+            );
+            $include = array('slots','events');
+
+            $days = $this->day->getItemsBy((object)[
+              'take' => false,
+              'include' => $include,
+              'filter' => json_decode(json_encode($filterDay))
+            ]);
+
+            // Day is inactive or not exist
+            if(count($days)<=0){
+            
+              $dayNumber = date('N',strtotime($fullDate));
+
+              // Filter by day number
+              $filterDay =array(
+                "status" => 1,
+                "dayNum" => $dayNumber
+              );
+              $include = array('slots','events');
+          
+              $days = $this->day->getItemsBy((object)[
+                'take' => 1,
+                'include' => $include,
+                'filter' => json_decode(json_encode($filterDay))
+              ]);
+
+            }// and IF days
+
+            foreach($days as $day){
+              $slots = $day->slots;
+              break;
+            }
+
+            // Slots by day
+            $sloter =  $slots;
+            $sloterTotal = count($sloter);
+            
+            // Filter reservation by day
+            $filtered = $reservations->where('start_date', $fullDate.' 00:00:00');
+            $reservationsDay = $filtered->all();
+            
+            $reservationsTotal = 0;
+            foreach($sloter as $slot){
+
+                foreach ($reservationsDay as $re) {
+                        //echo "SlotName {$slot->id} - Reservation Slot {$re->slot_id} <br> ";
+                    if($slot->id==$re->slot_id){
+                        $reservationsTotal++;
+                        break;
+                    }
+                       
+                }
+                    
+            }
+
+            // Code for Testing
+            //if($fullDate=="2019-06-23"){
+                //dd($fullDate,"Reservations General: ".count($reservations));
+                //dd($fullDate,"Reservations By Day: ".count($reservationsDay));
+                //dd($fullDate,"TotalSlots: ".$sloterTotal,"TotalReservations: ".$reservationsTotal);
+                //echo "Fecha:{$fullDate} - Bloques:{$sloterTotal} - Reservaciones:{$reservationesTotal} <br>";
+            //}
+            
+            // Note: If sloterTotal is 0 and reservation is 0 , available will be false
+            if($reservationsTotal == $sloterTotal){
+                $available = false;
+            }
+
+            $construct = array(
+                'fulldate' => $fullDate, 
+                'day' => $dDay, 
+                'month' => $dMonth,
+                'year' => $dYear,
+                'available' => $available
+            );
+
+            $data->push($construct);
+
+          }// For calendar
+
+        //}// If reservations
+
+        $response['response'] = $responseP;
+        $response['daysStatus'] = $data;
+       
+      }
+
+    } catch (\Exception $e) {
+      \Log::error($e);
+      $status = $this->getStatusError($e->getCode());
+      $response = ["errors" => $e->getMessage()];
+    }
+
+    return response()->json($response, $status ?? 200);
+  }
 
   
 

@@ -1,6 +1,5 @@
 @extends('layouts.master')
 
-
 @section('meta')
     <meta name="description" content="{!! $event->summary !!}">
     <!-- Schema.org para Google+ -->
@@ -30,23 +29,16 @@
 @stop
 
 <style type="text/css">
-
     .fondo-reservas{
         max-height: 500px;
         overflow: hidden; 
     }
-
-    /*Color para pruebas*/
-    .ibooking-single{
-        background-color:#02020245;
-    }
-
 </style>
 
 @section('content')
 
 
-<div class="page ibooking ibooking-single ibooking-single-{{$event->id}}">
+<div class="page ibooking ibooking-single ibooking-single-{{$event->id}} ibooking-giftcard-single">
 
     <div class="fondo-reservas">
         <img src="{{ Theme::url('img/podreis-atraparlo-a-tiempo-2.jpg') }}" alt="fondo-new">
@@ -104,68 +96,45 @@
 
         </div>
 
-      
         {{--###################################### Title --}}
         <div class="row block-title">
             <div class="col-xs-12">
+                    
                 <h1>{{$event->title}}</h1>
+
             </div>
         </div>
 
         {{--###################################### Infor-Gallery --}}
-
         <div class="row block-infor-gallery">
-            
+
             <div class="col-xs-12 col-sm-12 col-md-6 block-infor">
-
-                <h2>{{trans('ibooking::frontend.description')}}</h2>
-                <div class="event-description">
-                    {!!$event->description!!}
-                </div>
                 
-                <div class="btn-gift">
-                    <a href="{{route(locale().'.ibooking.event.giftcard',[$event->slug])}}">¿Quieres comprar una tarjeta de regalo?</a>
+                <h2>Obten tu Tarjeta de Regalo</h2>
+
+                <p class="bg-danger" style="padding: 15px;">
+                    *tiene una caducidad de 3 meses.
+                </p>
+                
+                <div class="event-description">
+                    
+                    @include('ibooking::frontend.giftcard.form')
+
                 </div>
 
-                <style type="text/css">
-                    .btn-gift{background-color: #DE050F;padding: 4.5px 25px;display: inline-block;margin-bottom: 20px;}
-                    .btn-gift a{color:white;text-transform: uppercase;font-size: 23px;}
-                </style>
-               
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-5 col-md-offset-1 block-gallery">
+
                 Galeria Nueva
-            {{--
-               @include('ibooking::frontend.gallery.slider')
-            --}}
-    
+                {{--
+                @include('ibooking::frontend.gallery.slider')
+                --}}
+
             </div>
 
         </div>
 
-        {{--###################################### Ibooking-Video --}}
-
-        <div class="row block-booking-video">
-
-            <div class="col-xs-12 col-sm-12 col-md-6">
-                @include('ibooking::frontend.booking.index')
-            </div>
-    
-            <div class="col-xs-12 col-sm-12 col-md-5 col-md-offset-1 block-video"> 
-                @if(isset($event->video))
-                    Video
-                    {{--
-                    <iframe width="100%" height="315" src="{{$event->video}}" frameborder="0" allowfullscreen></iframe>
-                    --}}
-                @else
-                    <div class="alert alert-danger">
-                        {{trans('ibooking::frontend.dontexist')}}
-                    </div>
-                @endif
-            </div>
-    
-        </div>
         
 
     </div>

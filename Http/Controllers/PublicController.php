@@ -21,6 +21,9 @@ use Modules\Ibooking\Events\ReservationWasCreated;
 // Ishoppingcart
 use Modules\Ishoppingcart\Repositories\CouponRepository;
 
+// Supports
+use Modules\Ibooking\Support\Coupon as couponSupport;
+
 //Request
 use Modules\Ibooking\Http\Requests\CreateReservationFrontRequest;
 
@@ -37,7 +40,6 @@ class PublicController extends BasePublicController
     private $coupon; 
     private $setting;
    
-
     public function __construct(
         EventRepository $event, 
         PlanRepository $plan, 
@@ -125,7 +127,7 @@ class PublicController extends BasePublicController
     public function reservationCreate(CreateReservationFrontRequest $request){
         
         $data = $request->all();
-
+        
         try{
     
             \DB::beginTransaction();
@@ -136,17 +138,29 @@ class PublicController extends BasePublicController
             // If Price is a fail
             if(!$priceBD)
                 return redirect()->back();
-
+            
             // Reservation Pending
             $data["status"] = 2; 
-        
+
+            // Check Coupon
+            if(isset($data["coupon_code"]) && !empty($data["coupon_code"])) {
+                $supportCoupon = new couponSupport();
+                $data = $supportCoupon->getValueReservation($data);
+            }
+
             //Create
             $reservation = $this->reservation->create($data);
 
-            \DB::commit(); //Commit to Data Base
+            //The pay was with the coupon and full
+            if($data["value"]==0){
+                $this->sendEmail($reservation,$coupon);
+                return redirect()->route("homepage");
+            }else{
+                $request->session()->put('reservationID', $reservation->id);
+                return redirect()->route(locale().'.checkout');
+            }
 
-            $request->session()->put('reservationID', $reservation->id);
-            return redirect()->route(locale().'.checkout');
+            \DB::commit(); //Commit to Data Base
 
         } catch (\Exception $e) {
 
@@ -158,8 +172,9 @@ class PublicController extends BasePublicController
 
     }
 
+    
      /**
-     * Prueba de correo
+     * Send Email (Ishoppingcart Module)
      *
      * @return Response
      */
@@ -169,16 +184,13 @@ class PublicController extends BasePublicController
         $email_to = explode(',',$this->setting->get('ibooking::form-emails'));
         $sender  = $this->setting->get('core::site-name');
 
-        //$order = "R".$reservation->id."C".$coupon->id; // Original
-        $order = "R".$reservation->id."C"; //testing
-
+        $order = "R".$reservation->id."C".$coupon->id; // Original
+        
         $content=['order'=>$order,'reservation'=>$reservation];
         
-        //$mail = emailSend(['email_from'=>[$email_from],'theme' => 'ibooking::email.success_order','email_to' => $reservation->email,'subject' => 'Confirmación de pago de orden', 'sender'=>$sender, 'data' => array('title' => 'Confirmación de pago de orden','intro'=>'Felicidades su reservación fue exitosa','content'=>$content)]);
-
-        $mail= emailSend(['email_from'=>[$email_from],'theme' => 'ishoppingcart::email.success_order','email_to' => $email_to,'subject' => 'Confirmación de pago de orden', 'sender'=>$sender, 'data' => array('title' => 'Confirmación de pago de orden','intro'=>'Confirmación de Nueva Orden','content'=>$content)]);
+        $mail = emailSend(['email_from'=>[$email_from],'theme' => 'ibooking::email.success_order','email_to' => $reservation->customer->email,'subject' => 'Confirmación de pago de orden', 'sender'=>$sender, 'data' => array('title' => 'Confirmación de pago de orden','intro'=>'Felicidades su reservación fue exitosa','content'=>$content)]);
+        $mail = emailSend(['email_from'=>[$email_from],'theme' => 'ishoppingcart::email.success_order','email_to' => $email_to,'subject' => 'Confirmación de pago de orden', 'sender'=>$sender, 'data' => array('title' => 'Confirmación de pago de orden','intro'=>'Confirmación de Nueva Orden','content'=>$content)]);
         
-       
     }
 
 

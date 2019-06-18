@@ -98,11 +98,11 @@
 
           </div>
 
-          {{--
+          
           <div class="col-xs-12">
             @include('ibooking::frontend.booking.coupon')
           </div>
-          --}}
+          
 
           <div class="col-xs-12">
             <h4 class="title-infor-buyer">{{trans('ibooking::frontend.buyer')}}</h4>

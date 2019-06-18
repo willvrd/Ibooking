@@ -57,6 +57,16 @@ class EloquentReservationRepository extends EloquentBaseRepository implements Re
           $query->whereDate('start_date', $filter->startDate);
         }
 
+         //add filter Order By
+        if (isset($filter->orderBy)){
+
+          $orderBy = $filter->orderBy;
+          $orderBy->field = $orderBy->field ?? 'created_at';
+          $orderBy->order = $orderBy->order ?? 'ASC';
+
+          $query->orderBy($orderBy->field, $orderBy->order);
+        }
+
       }
 
       /*== FIELDS ==*/
