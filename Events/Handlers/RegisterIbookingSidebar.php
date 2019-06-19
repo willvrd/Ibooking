@@ -104,6 +104,15 @@ class RegisterIbookingSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                         $this->auth->hasAccess('ibooking.reservations.index')
                     );
                 });
+
+                $item->item(trans('ibooking::reservations.bulkload.title'), function (Item $item) {
+                    $item->icon('fa fa-upload');
+                    $item->weight(0);
+                    $item->route('admin.ibooking.bulkload.index');
+                    $item->authorize(
+                        $this->auth->hasAccess('ibooking.bulkload.import')
+                    );
+                });
                
 // append
 

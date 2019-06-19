@@ -28,4 +28,14 @@ return [
     ],
     'validation' => [
     ],
+
+    'bulkload' => [
+        'title' => 'Import',
+        'Select File' => 'Select File',
+        'selectFilecompatible' => 'Select Compatible Files CSV, XLSX',
+        'Submit' => 'Submit',
+        'import' => 'Import',
+        'success migrate' => 'Success migrate',
+        'error in migrate' => 'Error in migrate',
+    ]
 ];

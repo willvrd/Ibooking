@@ -24,6 +24,10 @@ use Modules\Iprofile\Entities\Field;
 //**** User
 use Modules\User\Repositories\UserRepository;
 
+//**** Import
+use Maatwebsite\Excel\Facades\Excel;
+use Modules\Ibooking\Imports\ReservationsImport;
+
 class ReservationController extends AdminBaseController
 {
     /**
@@ -166,4 +170,30 @@ class ReservationController extends AdminBaseController
         return redirect()->route('admin.ibooking.reservation.index')
             ->withSuccess(trans('core::core.messages.resource deleted', ['name' => trans('ibooking::reservations.title.reservations')]));
     }
+
+    /**
+     * Import view.
+     *
+     * @param  File $reservations
+     * @return Response
+     */
+    public function indexImport(){
+        return view('ibooking::admin.reservations.bulkload.index');
+    }
+
+    public function importReservations(Request $request)
+    {
+        $msg="";
+        try {
+            $data_excel = Excel::import(new ReservationsImport(), $request->importfile);
+            $msg = trans('ibooking::reservations.bulkload.success migrate');
+            return redirect()->route('admin.ibooking.reservation.index')
+            ->withSuccess($msg);
+        } catch (Exception $e) {
+            $msg  =  trans('ibooking::reservations.bulkload.error in migrate');
+            return redirect()->route('admin.ibooking.reservations.index')
+            ->withError($msg);
+        }
+    }
+
 }

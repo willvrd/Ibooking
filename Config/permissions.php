@@ -37,6 +37,11 @@ return [
         'edit' => 'ibooking::reservations.edit resource',
         'destroy' => 'ibooking::reservations.destroy resource',
     ],
+
+    'ibooking.bulkload' => [
+        'import' => 'ibooking::reservations.bulkload.import',
+    ],
+
 // append
 
 

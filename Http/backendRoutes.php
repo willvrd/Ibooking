@@ -216,6 +216,23 @@ $router->group(['prefix' =>'/ibooking'], function (Router $router) {
         'uses' => 'ReservationController@destroy',
         'middleware' => 'can:ibooking.reservations.destroy'
     ]);
+
+    $router->group(['prefix' =>'bulkload'], function (Router $router){
+
+        $router->get('index',[
+            'as'=>'admin.ibooking.bulkload.index',
+            'uses'=>'ReservationController@indeximport',
+            'middleware'=>'can:ibooking.bulkload.import',
+        ]);
+
+        $router->post('import',[
+            'as'=>'admin.ibooking.bulkload.import',
+            'uses'=>'ReservationController@importReservations',
+            'middleware'=>'can:ibooking.bulkload.import',
+        ]);
+
+    });
+
 // append
 
 
