@@ -10,7 +10,14 @@
 
 <div class="form-group">
     <label for="plan">{{trans('ibooking::plans.single')}}</label>
-    <input name="plan" class="form-control" value="{{$reservation->present()->planName($reservation->plan_id)}}" readonly>
+    @php
+        if(!empty($reservation->plan)){
+            $planName = $reservation->plan;
+        }else{
+            $planName = $reservation->present()->planName($reservation->plan_id);
+        }
+    @endphp
+    <input name="plan" class="form-control" value="{{$planName}}" readonly>
 </div> 
  
 {{--
