@@ -26,56 +26,33 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
+                    
                     <div class="table-responsive">
-                        <table class="data-table table table-bordered table-hover">
+                        <table id="tableReservations" class="data-table table table-bordered table-hover" style="width:100%;">
                             <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Email</th>
-                                <th>Date</th>
-                                <th>{{ trans('ibooking::common.table.description') }}</th>
-                                <th>{{ trans('core::core.table.created at') }}</th>
-                                <th data-sortable="false">{{ trans('core::core.table.actions') }}</th>
-                            </tr>
+                                <tr class="titles">
+                                    <th>ID</th>
+                                    <th>{{ trans('ibooking::common.table.description') }}</th>
+                                    <th>Plan</th>
+                                    <th>{{ trans('core::core.table.created at') }}</th>
+                                    <th data-sortable="false">{{ trans('core::core.table.actions') }}</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <?php if (isset($reservations)): ?>
-                            <?php foreach ($reservations as $reservation): ?>
-                            <tr>
-                                <td>{{$reservation->id}}</td>
-                                <td>{{$reservation->customer->email}}</td>
-                                <td>{{$reservation->present()->dateF($reservation->start_date,'d-m-Y')}}</td>
-                                <td>{{$reservation->description}}</td>
-                                <td>
-                                    <a href="{{ route('admin.ibooking.reservation.edit', [$reservation->id]) }}">
-                                        {{ $reservation->created_at }}
-                                    </a>
-                                </td>
-                                <td>
-                                    <div class="btn-group">
-                                        <a title="ver" href="{{ route('admin.ibooking.reservation.edit', [$reservation->id]) }}" class="btn btn-default btn-flat"><i class="fa fa-pencil"></i></a>
-                                        {{--
-                                        <button class="btn btn-danger btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" data-action-target="{{ route('admin.ibooking.reservation.destroy', [$reservation->id]) }}"><i class="fa fa-trash"></i></button>
-                                        --}}
-                                    </div>
-                                </td>
-                            </tr>
-                            <?php endforeach; ?>
-                            <?php endif; ?>
                             </tbody>
                             <tfoot>
-                            <tr>
-                                <th>ID</th>
-                                <th>Email</th>
-                                <th>Date</th>
-                                <th>{{ trans('ibooking::common.table.description') }}</th>
-                                <th>{{ trans('core::core.table.created at') }}</th>
-                                <th>{{ trans('core::core.table.actions') }}</th>
-                            </tr>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>{{ trans('ibooking::common.table.description') }}</th>
+                                    <th>Plan</th>
+                                    <th>{{ trans('core::core.table.created at') }}</th>
+                                    <th data-sortable="false">{{ trans('core::core.table.actions') }}</th>
+                                </tr>
                             </tfoot>
                         </table>
-                        <!-- /.box-body -->
                     </div>
+
+
                 </div>
                 <!-- /.box -->
             </div>
@@ -107,18 +84,46 @@
     <?php $locale = locale(); ?>
     <script type="text/javascript">
         $(function () {
-            $('.data-table').dataTable({
-                "paginate": true,
-                "lengthChange": true,
-                "filter": true,
-                "sort": true,
-                "info": true,
-                "autoWidth": true,
-                "order": [[ 0, "desc" ]],
+           
+            var url = "{{route('admin.ibooking.reservation.searchReservations')}}";
+
+            var table = $('.data-table').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": url,
+                "lengthMenu": [[20, 50, 100], [20, 50, 100]],
+                "columns": [
+                    {"data":"id"},
+                    {"data":"description"},
+                    {"data":"plan"},
+                    {"data":"created_at"},
+                    {"data":"id"},
+                ],
+                "columnDefs": [ {
+                    "targets": 4,
+                    "data": "",
+                    "render": function ( data, type, row, meta ) {
+                       
+                        //rout = "{{route('admin.ibooking.reservation.edit', ["+data+"]) }}";
+                        rout = "{{url('backend/ibooking/reservations')}}/"+data+"/edit";
+                        
+                        etiA = '<a title="ver" href="'+rout+'" class="btn btn-default btn-flat"><i class="fa fa-pencil"></i></a>'
+                        
+                        htmlDel = '<div class="btn-group"> '+etiA+'</div>';
+
+                        htmlResult = htmlDel;
+                        return htmlResult;
+                    }//render
+                }],
+                "order": [[ 1, "desc" ]],
                 "language": {
                     "url": '<?php echo Module::asset("core:js/vendor/datatables/{$locale}.json") ?>'
                 }
+               
+
             });
+            
+
         });
     </script>
 @endpush

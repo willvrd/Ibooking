@@ -28,6 +28,9 @@ use Modules\User\Repositories\UserRepository;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\Ibooking\Imports\ReservationsImport;
 
+use Illuminate\Support\Facades\Input;
+use Yajra\Datatables\Datatables;
+
 class ReservationController extends AdminBaseController
 {
     /**
@@ -169,6 +172,20 @@ class ReservationController extends AdminBaseController
 
         return redirect()->route('admin.ibooking.reservation.index')
             ->withSuccess(trans('core::core.messages.resource deleted', ['name' => trans('ibooking::reservations.title.reservations')]));
+    }
+
+     /**
+     * DataTable Component
+     *
+     * @param  Reservation $reservation
+     * @return Response
+     */
+
+    public function searchTable(Request $request)
+    {
+       
+        $query = Reservation::select('id','description','plan','created_at');
+        return datatables($query)->make(true);
     }
 
     /**

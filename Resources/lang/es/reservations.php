@@ -46,8 +46,8 @@ return [
         'selectFilecompatible' => 'Selecciona un archivo compatible CSV, XLSX',
         'Submit' => 'Enviar',
         'import' => 'Importar',
-        'success migrate' => 'Migración de empresas exitosa',
-        'error in migrate' => 'Error en migración de empresas',
+        'success migrate' => 'Migración de Reservaciones exitosa',
+        'error in migrate' => 'Error en migración de reservaciones',
     ]
 
 ];

@@ -217,6 +217,11 @@ $router->group(['prefix' =>'/ibooking'], function (Router $router) {
         'middleware' => 'can:ibooking.reservations.destroy'
     ]);
 
+    $router->get('reservations/searchReservations', [
+        'as'    => 'admin.ibooking.reservation.searchReservations',
+        'uses'  => 'ReservationController@searchTable'
+    ]);
+
     $router->group(['prefix' =>'bulkload'], function (Router $router){
 
         $router->get('index',[

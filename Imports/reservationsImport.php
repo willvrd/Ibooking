@@ -16,7 +16,12 @@ use Exception;
 //Others
 use Carbon\Carbon;
 
+/*
 class ReservationsImport implements ToCollection,WithChunkReading,WithHeadingRow,ShouldQueue
+{
+*/
+
+class ReservationsImport implements ToCollection,WithHeadingRow
 {
 
     private $reservation;
@@ -130,17 +135,21 @@ class ReservationsImport implements ToCollection,WithChunkReading,WithHeadingRow
     The most ideal situation (regarding time and memory consumption)
     you will find when combining batch inserts and chunk reading.
     */
+    /*
     public function batchSize(): int
     {
         return 1000;
     }
+    */
 
     /*
      This will read the spreadsheet in chunks and keep the memory usage under control.
     */
+    /*
     public function chunkSize(): int
     {
         return 1000;
     }
+    */
 
 }
